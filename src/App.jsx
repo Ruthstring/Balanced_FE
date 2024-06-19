@@ -5,6 +5,8 @@ import Signup from "./components/Signup"
 import Home from "./components/Home"
 
 import './App.css'
+import ShoppingPage from './components/ShoppingPage';
+import BalancePage from './components/BalancePage';
 
 function App() {
   const [user, setUser] = useState(false);
@@ -38,9 +40,11 @@ function App() {
     </nav>
       
       <Routes>
-        <Route path="/" element={<Login setUser={setUser}  />}></Route> 
+        <Route path="/" element={<Login setUser={setUser}  />} />
         <Route path='/signup' element={<Signup setUser={setUser} />} />
         <Route path='/home' element={user ? <Home /> : <Navigate to='/' />} />
+         <Route path="/shoppingpage" element={<ShoppingPage />} />
+         <Route path="/balance" element={<BalancePage />}/>
       </Routes>
       </>
     
