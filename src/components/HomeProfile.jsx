@@ -2,10 +2,10 @@
 
 
 
-const HomeProfile=()=>{
+const HomeProfile=({username})=>{
     return(
         <>
-        <h1>Here The user profile</h1>
+        <h1>Welcome back {username}</h1>
         
         </>
     )

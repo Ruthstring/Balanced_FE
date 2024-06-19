@@ -36,7 +36,7 @@ function App() {
       )}
       
     </nav>
-      <h1>Hollo project</h1>
+      
       <Routes>
         <Route path="/" element={<Login setUser={setUser}  />}></Route> 
         <Route path='/signup' element={<Signup setUser={setUser} />} />
