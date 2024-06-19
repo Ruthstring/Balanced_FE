@@ -1,5 +1,8 @@
 import { useState, useEffect, } from 'react'
-import{Link, Navigate, useLocation} from "react-router-dom"
+import{Link, Navigate, useLocation, Route,Routes} from "react-router-dom"
+import Login from './components/Login';
+import Signup from "./components/Signup"
+import Home from "./components/Home"
 
 import './App.css'
 
