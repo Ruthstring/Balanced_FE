@@ -1,10 +1,12 @@
 import { useState, useEffect, } from 'react'
 import{Link, Navigate, useLocation, Route,Routes} from "react-router-dom"
+import './App.css'
 import Login from './components/Login';
 import Signup from "./components/Signup"
 import Home from "./components/Home"
 
-import './App.css'
+import AddHousehold from './components/AddHousehold';
+import SearchHousehold from './components/SearchHousehold';
 import ShoppingPage from './components/ShoppingPage';
 import BalancePage from './components/BalancePage';
 
@@ -45,6 +47,8 @@ function App() {
         <Route path='/home' element={user ? <Home /> : <Navigate to='/' />} />
          <Route path="/shoppingpage" element={<ShoppingPage />} />
          <Route path="/balance" element={<BalancePage />}/>
+         <Route path="/add-household" element={<AddHousehold />} />
+        <Route path="/search-household" element={<SearchHousehold />} />
       </Routes>
       </>
     
