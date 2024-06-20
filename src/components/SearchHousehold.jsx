@@ -8,7 +8,7 @@ const SearchHousehold = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/households?search=${searchTerm}`, {
+      const response = await fetch(`http://localhost:5000/api/auth/households?search=${searchTerm}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
@@ -17,7 +17,7 @@ const SearchHousehold = () => {
         const data = await response.json();
         setHouseholds(data);
       } else {
-        // Handle error
+        console.error('Failed to fetch households');
       }
     } catch (error) {
       console.error('Error searching households:', error);
@@ -26,16 +26,16 @@ const SearchHousehold = () => {
 
   const handleJoinHousehold = async (householdId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/households/${householdId}/join`, {
+      const response = await fetch(`http://localhost:5000/api/auth/households/join`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+        body: JSON.stringify({ name: householdId }) // Assuming you are passing household name to join
       });
 
       if (response.ok) {
-        // Update user profile or redirect to home after successful join
         navigate('/home');
       } else {
-        // Handle error
+        console.error('Failed to join household');
       }
     } catch (error) {
       console.error('Error joining household:', error);
@@ -55,9 +55,9 @@ const SearchHousehold = () => {
 
       <div>
         {households.map((household) => (
-          <div key={household.id}>
+          <div key={household._id}>
             <span>{household.name}</span>
-            <button onClick={() => handleJoinHousehold(household.id)}>Join</button>
+            <button onClick={() => handleJoinHousehold(household.name)}>Join</button> {/* Pass name instead of id */}
           </div>
         ))}
       </div>
