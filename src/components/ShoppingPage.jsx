@@ -74,6 +74,7 @@ const ShoppingPage = () => {
       if (response.ok) {
         const newItem = await response.json();
         setItems([...items, newItem]);
+        
         setItemName('');
       } else {
         console.error('Failed to add item');
@@ -96,7 +97,7 @@ const ShoppingPage = () => {
       if (response.ok) {
         const boughtItem = await response.json();
         console.log(boughtItem);
-        setBoughtItems([...boughtItems, boughtItem]);
+        setBoughtItems(boughtItem);
 
         // After buying the item, delete it from the shopping list
         await handleDeleteItem(itemIdToBuy);
@@ -134,129 +135,6 @@ const ShoppingPage = () => {
     }
   };
 
-// const ShoppingPage = () => {
-//   const [itemName, setItemName] = useState('');
-//   const [items, setItems] = useState([]);
-//   const [boughtItems, setBoughtItems] = useState([]);
-//   const [cost, setCost] = useState('');
-//   const [itemIdToBuy, setItemIdToBuy] = useState(null); // To track the item being bought
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     fetchItems();
-//     fetchBoughtItems();
-//   }, []);
-
-//   const fetchItems = async () => {
-//     try {
-//       const response = await fetch('http://localhost:5000/api/auth/shopping/items', {
-//         method: 'GET',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `Bearer ${localStorage.getItem('token')}`,
-//         },
-//       });
-//       if (response.ok) {
-//         const data = await response.json();
-//         setItems(data);
-//       } else {
-//         console.error('Failed to fetch items');
-//       }
-//     } catch (error) {
-//       console.error('Error fetching items:', error);
-//     }
-//   };
-
-//   const fetchBoughtItems = async () => {
-//     try {
-//       const response = await fetch('http://localhost:5000/api/auth/shopping/bought-items', {
-//         method: 'GET',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `Bearer ${localStorage.getItem('token')}`,
-//         },
-//       });
-//       if (response.ok) {
-//         const data = await response.json();
-//         setBoughtItems(data);
-//       } else {
-//         console.error('Failed to fetch bought items');
-//       }
-//     } catch (error) {
-//       console.error('Error fetching bought items:', error);
-//     }
-//   };
-
-//   const handleAddItem = async () => {
-//     try {
-//           // Check if item already exists in the shopping list
-//       const existingItem = items.find(item => item.name.toLowerCase() === itemName.toLowerCase());
-//       if (existingItem) {
-//         setError('Item already exists in the shopping list');
-//         return;
-//       }
-//       const response = await fetch('http://localhost:5000/api/auth/shopping/add', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `Bearer ${localStorage.getItem('token')}`,
-//         },
-//         body: JSON.stringify({ name: itemName }),
-//       });
-//       if (response.ok) {
-//         const newItem = await response.json();
-//         setItems([...items, newItem]);
-//         setItemName('');
-//       } else {
-//         console.error('Failed to add item');
-//       }
-//     } catch (error) {
-//       console.error('Error adding item:', error);
-//     }
-//   };
-
-//   const handleBuyItem = async () => {
-//     try {
-//       const response = await fetch('http://localhost:5000/api/auth/shopping/buy', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `Bearer ${localStorage.getItem('token')}`,
-//         },
-//         body: JSON.stringify({ itemId: itemIdToBuy, cost }),
-//       });
-//       if (response.ok) {
-        
-     
-//         // Buy the item and add to bought items
-//         const boughtItem = await response.json();
-//         setBoughtItems([...boughtItems, boughtItem]);
-  
-//          // Delete the item from the shopping list
-//          const deleteResponse = await fetch(`http://localhost:5000/api/auth/shopping/${itemIdToBuy}`, {
-//           method: 'DELETE',
-//           headers: {
-//             'Authorization': `Bearer ${localStorage.getItem('token')}`,
-//           },
-//         });
-//         if (!deleteResponse.ok) {
-//           throw new Error('Failed to delete item from shopping list');
-//         }
-
-//         // Update the local state to remove the item from items
-//         setItems(items.filter(item => item._id !== itemIdToBuy));
-
-//         // Reset fields
-//         setItemIdToBuy(null);
-//         setCost('');
-//       } else {
-//         console.error('Failed to buy item');
-//       }
-//     } catch (error) {
-//       console.error('Error buying item:', error);
-//     }
-//   };
-  
 
 
   return (
