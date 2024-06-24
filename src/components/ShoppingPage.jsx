@@ -135,6 +135,24 @@ const ShoppingPage = () => {
     }
   };
 
+  //delete bought item button
+  const handleDeleteBoughtItem = async (itemId) => {
+    try {
+      const deleteResponse = await fetch(`http://localhost:5000/api/auth/shopping/bought/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (deleteResponse.ok) {
+        setBoughtItems(boughtItems.filter(item => item._id !== itemId));
+      } else {
+        throw new Error('Failed to delete bought item');
+      }
+    } catch (error) {
+      console.error('Error deleting bought item:', error);
+    }
+  };
 
 
   return (
@@ -182,6 +200,7 @@ const ShoppingPage = () => {
           {boughtItems.map((item) => (
             <li key={item._id}>
               {item.name} - ${item.cost} by {item.buyer ? item.buyer.username : 'Unknown'}
+              <button onClick={() => handleDeleteBoughtItem(item._id)} className="bg-red-500 text-white p-2 ml-2">Delete</button>
             </li>
           ))}
         </ul>
