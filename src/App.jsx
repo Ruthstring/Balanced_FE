@@ -49,7 +49,8 @@ function App() {
          <Route path="/balance" element={<BalancePage />}/>
          <Route path="/add-household" element={<AddHousehold />} />
         <Route path="/search-household" element={<SearchHousehold />} />
-      </Routes>
+         <Route path="/balancepage" element={<BalancePage />} />
+    </Routes>
       </>
     
   )
