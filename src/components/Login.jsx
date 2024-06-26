@@ -39,7 +39,7 @@ const Login = ({ setUser }) => {
 
         localStorage.setItem('token', data.token);
         localStorage.setItem("username",data.username);//store the username
-        
+        console.log(data);
         setUser(true);
         navigate('/home');
       } catch (error) {
