@@ -9,6 +9,7 @@ import AddHousehold from './components/AddHousehold';
 import SearchHousehold from './components/SearchHousehold';
 import ShoppingPage from './components/ShoppingPage';
 import BalancePage from './components/BalancePage';
+import PersonalBalance from './components/PersonalBalance';
 
 function App() {
   const [user, setUser] = useState(false);
@@ -50,6 +51,7 @@ function App() {
          <Route path="/add-household" element={<AddHousehold />} />
         <Route path="/search-household" element={<SearchHousehold />} />
          <Route path="/balancepage" element={<BalancePage />} />
+          <Route path="/personal-balance" element={<PersonalBalance />} />
     </Routes>
       </>
     

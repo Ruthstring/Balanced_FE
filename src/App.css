@@ -4,3 +4,15 @@
   padding: 2rem;
   text-align: center;
 }
+
+.balances-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.overall-balances, .personal-balance-section {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+}
