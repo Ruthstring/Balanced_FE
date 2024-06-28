@@ -52,17 +52,7 @@ const PersonalBalance = ({ balances }) => {
       });
     });
 
-    // const debts = { owes: [], owed: [] };
-
-    // owedInfo.forEach(owed => {
-    //   if (owed.moneyOwed > 0) {
-    //     debts.owes.push({ from: owed.user.username, to: owed.userOwed.username, amount: owed.moneyOwed });
-    //   } else if (owed.moneyOwed < 0) {
-    //     debts.owed.push({ from: owed.userOwed.username, to: owed.user.username, amount: -owed.moneyOwed });
-    //   }
-    // });
-
-
+   
   
     setPersonalStatus(owedInfo);
   };
