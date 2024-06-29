@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import HomeBalance from "./HomeBalance";
 import HomeProfile from "./HomeProfile";
 import HomeShopping from "./HomeShopping";
+import Notifications from "./Notifications";
 
 const Home=()=>{
     // const [username, setUsername] = useState("");
@@ -99,7 +100,7 @@ const Home=()=>{
       <HomeBalance userBalance={userBalance} />
       </div>
       <div className="rounded overflow-hidden shadow-lg row-span-1">
-        {/* Placeholder for notifications component */}
+        <Notifications />
         <div className="flex items-center justify-center h-full">
           Notifications Component
         </div>
