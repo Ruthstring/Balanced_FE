@@ -93,25 +93,26 @@ const Home=()=>{
 
           return (
         <div className="grid-container mt-5 ml-10 mr-10 p-5 grid grid-cols-1 md:grid-cols-2 gap-4 grid-rows-3 gap-8">
-          <div className="row-span-3 md:row-span-3">
-          <div className="container purple-box mb-5 rounded-xl overflow-hidden shadow-lg row-span-1  grid grid-cols-1 md:grid-cols-2">
-            <HomeProfile username={localStorage.getItem('username')} />
-          </div>
-
-          <div className="container green-box mb-5 rounded-xl overflow-hidden shadow-lg  row-span-1 md:row-span-1">
-            <HomeBalance userBalance={userBalance} />
-          </div>
-
-          <div className="container green-box rounded-xl overflow-hidden shadow-lg row-span-1 md:row-span-1">
-          {/* <div className="flex items-center justify-center h-full"> */}
-            Notifications Component
           
+          <div className="firstCol row-span-3 md:row-span-3 h-full">
+            <div className="container purple-box mb-5 rounded-xl overflow-hidden shadow-lg row-span-1 flex-grow grid grid-cols-1 md:grid-cols-2">
+              <HomeProfile username={localStorage.getItem('username')} />
+            </div>
+
+            <div className="container homeBalance green-box mb-5 rounded-xl overflow-hidden shadow-lg flex-grow row-span-1 md:row-span-1">
+              <HomeBalance userBalance={userBalance} />
+            </div>
+
+            <div className="container green-box rounded-xl overflow-hidden shadow-lg row-span-1 md:row-span-1 flex-grow">
+              Notifications Component
+            </div>
+
+          </div>
+
+          <div className="container purple-box rounded-xl overflow-hidden shadow-lg row-span-3 md:row-span-3">
+             <HomeShopping />
+          </div>
         </div>
-        </div>
-        <div className="container purple-box rounded-xl overflow-hidden shadow-lg row-span-3 md:row-span-3">
-          <HomeShopping />
-        </div>
-    </div>
     
   );
     

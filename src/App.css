@@ -1,5 +1,12 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #1D1678;
+}
 #root {
-  max-width: 1280px;
+   max-width: 1400px; 
+   height:auto;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -19,7 +26,29 @@
 .btn-see:hover{
   border:black solid 3px;
 }
+.btn-see:active {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
+.btn-buy{
+  background-color: #1D1678;
+  border-radius: 20px;
+  font-weight: bold;
+  color:white;
+  padding:5px 10px;
+  box-shadow:3px ;
+  box-shadow: 0 0 0 1px rgba(168, 191, 228, 0.5)
+}
+.btn-buy:hover{
+  background-color: #ADF6D1;
+  color:black;
+}
+.btn-buy:active {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border:black solid 3px;
+}
 
 
 /*Dashboard rules*/
@@ -34,16 +63,18 @@
   
 }
 
-.gridcontainer{
-  height:100vh;
-  height: calc(100vh - 20px); 
+.grid-container{
+  height:40rem;
+
 }
 .container{
   padding: 15px;
   
-  
 }
 
+.homeBalance{
+  max-height: 500px;
+}
 .purple-box{
   background-color: #8575FF;
 }
@@ -70,4 +101,15 @@
   height:20px;
   border:solid 3px;
   
+}
+
+/* SHOPING LIST*/
+.shopping-page{
+  height:40rem;
+}
+
+/*Trial trashcan icon*/
+.icon{
+  background-color: white;
+  margin:20%;
 }
