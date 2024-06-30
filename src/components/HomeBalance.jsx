@@ -8,17 +8,21 @@ const HomeBalance = ({ userBalance }) => {
    const balanceColorClass = userBalance >= 0 ? "text-green-500" : "text-red-500";
   
   return (
-    <div className="rounded overflow-hidden shadow-lg">
-      <h1>User Balance Overview</h1>
+    <>
+    {/* // <div className="rounded overflow-hidden shadow-lg"> */}
+      {/* <h1>User Balance Overview</h1> */}
+      <div className="container">
       {userBalance !== null && userBalance !== undefined ? (
         <p className={`text-3xl ${balanceColorClass}`}>Balance: ${userBalance.toFixed(2)}</p>
       ) : (
         <p>Loading balance...</p>
       )}
+      </div>
       <Link to="/balancepage">
-        <button>Go to Balance Page</button>
+        <button className="btn-see">See more</button>
       </Link>
-    </div>
+      </>
+    
   );
 };
 

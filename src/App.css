@@ -3,8 +3,54 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #1D1678;
 }
 
+/*GENERAL RULES*/
+.btn-see{
+  background-color: #ADF6D1;
+  border-radius: 20px;
+  font-weight: bold;
+  padding:5px 10px;
+  box-shadow:3px ;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.5)
+
+}
+.btn-see:hover{
+  border:black solid 3px;
+}
+
+
+
+/*Dashboard rules*/
+.black-div{
+  color:white;
+  font-weight: bold;
+  background-color: black;
+  margin-top: 15px;
+  margin-right:30px;
+  border-radius: 20px;
+  padding: 3px;
+  
+}
+
+.gridcontainer{
+  height:100vh;
+  height: calc(100vh - 20px); 
+}
+.container{
+  padding: 15px;
+  
+  
+}
+
+.purple-box{
+  background-color: #8575FF;
+}
+
+.green-box{
+  background-color: #EDFDF5;
+}
 .balances-page {
   display: flex;
   flex-direction: column;
@@ -15,4 +61,13 @@
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 8px;
+}
+
+
+/*HOME PROFILE*/
+.imgPlaceholder{
+  width: 20px;
+  height:20px;
+  border:solid 3px;
+  
 }
