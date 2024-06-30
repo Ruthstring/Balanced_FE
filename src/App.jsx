@@ -11,13 +11,22 @@ import ShoppingPage from './components/ShoppingPage';
 import BalancePage from './components/BalancePage';
 import PersonalBalance from './components/PersonalBalance';
 
+
+
 function App() {
   const [user, setUser] = useState(false);
   const location = useLocation();
+  
+
+  
+
 
   const handleLogout = () => {
     setUser(false);
     localStorage.removeItem('token');
+  
+    
+  
   };
 
   
@@ -37,7 +46,9 @@ function App() {
           {location.pathname !== '/signup' && <Link to='/signup'>Signup</Link>}
         </>
       ) : (
-        <button onClick={handleLogout}>Logout</button>
+        <div clasName="flex ">
+        <button className="btn-door flex items-center space-x-2 ml-14" onClick={handleLogout}>   <img src="../src/assets/LogoutClicked.svg" alt="Logout" className="w-10 h-10" /> <h1 className='text-white'>Logout</h1></button>
+        </div>
       )}
       
     </nav>

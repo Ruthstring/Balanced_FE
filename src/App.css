@@ -50,6 +50,9 @@ html, body {
   border:black solid 3px;
 }
 
+.btn-door:hover{
+  transform: scale(1.05);
+}
 
 /*Dashboard rules*/
 .black-div{
@@ -109,7 +112,7 @@ html, body {
 }
 
 /*Trial trashcan icon*/
-.icon{
+/* .icon{
   background-color: white;
   margin:20%;
-}
+} */
