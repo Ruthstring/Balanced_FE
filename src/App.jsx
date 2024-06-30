@@ -18,14 +18,9 @@ function App() {
   const location = useLocation();
   
 
-  
-
-
   const handleLogout = () => {
     setUser(false);
     localStorage.removeItem('token');
-  
-    
   
   };
 
@@ -36,22 +31,32 @@ function App() {
   }, []);
 
 
+   // Redirect to login if user is not logged in and on a protected page
+   if (!user && !['/', '/signup'].includes(location.pathname)) {
+    return <Navigate to="/" />;
+  }
+
+  
+
   return (
       <>
-      <nav>
-      {!user ? (
-        <>
-          {location.pathname !== '/' && <Link to='/'>Login</Link>}
-          {/* {'  |  '} */}
-          {location.pathname !== '/signup' && <Link to='/signup'>Signup</Link>}
-        </>
-      ) : (
-        <div clasName="flex ">
-        <button className="btn-door flex items-center space-x-2 ml-14" onClick={handleLogout}>   <img src="../src/assets/LogoutClicked.svg" alt="Logout" className="w-10 h-10" /> <h1 className='text-white'>Logout</h1></button>
-        </div>
-      )}
+       <nav className="flex justify-end p-4">
+        {!user && location.pathname !== '/' && ( // Hide logout button on login page
+          <>
+            <Link to="/">Login</Link>
+            <Link to="/signup">Signup</Link>
+          </>
+        )}
+        {user && location.pathname !== '/' && ( // Show logout button when logged in
+          <div className="flex items-center space-x-2">
+            <button className="btn-door flex items-center space-x-2 mr-12" onClick={handleLogout}>
+              <img src="../src/assets/LogoutClicked.svg" alt="Logout" className="w-10 h-10" />
+              <h1 className="text-white">Logout</h1>
+            </button>
+          </div>
+        )}
+      </nav>
       
-    </nav>
       
       <Routes>
         <Route path="/" element={<Login setUser={setUser}  />} />
