@@ -1,6 +1,8 @@
 import axios from 'axios'; 
 import { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ProfilepictureUpload from "./ProfilePictureUpload"
+
 
 const HomeProfile=({username})=>{
     const navigate = useNavigate();
@@ -9,6 +11,7 @@ const HomeProfile=({username})=>{
     const [options, setOptions] = useState([]);
     const [householdName, setHouseholdName] = useState('');
 
+    const [profilePicture, setProfilePicture] = useState('');
 
     // Checking if user belongs to a household:
   useEffect(() => {
@@ -83,6 +86,9 @@ const HomeProfile=({username})=>{
       <>
       {/* <div className="welcome-container grid-cols-2 gap-4 "> */}
         <div className="imgPlaceholder ml-10 col-span-1 size-28"></div>
+        <img src={profilePicture || 'default-placeholder.png'} alt="Profile" />
+          <ProfilepictureUpload setProfilePicture={setProfilePicture} />
+        
         <div className="col-span-1 ">
         <h1>Welcome back</h1> <div className="black-div"> {username} </div>
         <div className="black-div">{message}</div>
