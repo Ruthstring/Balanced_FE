@@ -1,6 +1,7 @@
 import PersonalBalance from './PersonalBalance';
 import React, { useState, useEffect } from 'react';
 
+
 const BalancePage = () => {
   const [balances, setBalances] = useState([]);
 
