@@ -156,10 +156,11 @@ const ShoppingPage = () => {
 
 
   return (
-    <div className="shopping-page flex">
-      <div className="w-1/2 p-4">
-        <h1>Shopping List</h1>
-        <div className="input-group mb-4">
+    <div className="shopping-page gap-12 flex mt-5">
+      <div className=" purple-box rounded-xl w-1/2 p-4 flex">
+      <div className="green-box mt-10 rounded-xl flex-grow ml-8 mr-8 overflow-y-auto h-100 ">
+        <h1 className='text-xl font-bold mb-4 mt-4'>Shopping List</h1>
+        <div className="input-group mb-4 mt-4">
           <input
             type="text"
             value={itemName}
@@ -167,19 +168,20 @@ const ShoppingPage = () => {
             placeholder="Enter item name"
             className="border p-2 mr-2"
           />
-          <button onClick={handleAddItem}>Add Item</button>
+          <button className='btn-see' onClick={handleAddItem}>Add Item</button>
         </div>
-        <ul>
+        <ul className="text-left ml-8">
           {items.map((item) => (
-            <li key={item._id} className="mb-2" >
-              {item.name}
-              <button onClick={() =>setItemIdToBuy(item._id)}
-                className="bg-green-500 text-white p-2 ml-2"
-                >Buy</button>
-            </li>
+            // <div className="itemBox">
+              <li key={item._id} className="mb-2" >
+                {item.name}
+                <button onClick={() =>setItemIdToBuy(item._id)}
+                  className="btn-buy ml-4"
+                  >Buy</button>
+              </li>
+           
           ))}
-        </ul>
-        {itemIdToBuy !== null && (
+          {itemIdToBuy !== null && (
           <div className="cost-inputmt-4">
             <input
               type="number"
@@ -192,18 +194,37 @@ const ShoppingPage = () => {
             className="bg-green-500 text-white p-2"
             >Confirm Purchase</button>
           </div>
-        )}
+          )}
+        </ul>
+        {/* {itemIdToBuy !== null && (
+          <div className="cost-inputmt-4">
+            <input
+              type="number"
+              value={cost}
+              onChange={(e) => setCost(e.target.value)}
+              placeholder="Enter cost"
+              className="border p-2 mr-2"
+            />
+            <button onClick={handleBuyItem}
+            className="bg-green-500 text-white p-2"
+            >Confirm Purchase</button>
+          </div>
+          )} */}
       </div>
-      <div className="w-1/2 p-4">
-        <h2>Bought Items</h2>
-        <ul>
+      </div>
+
+      <div className="purple-box rounded-xl w-1/2 p-4 flex">
+      <div className="green-box mt-10 rounded-xl flex-grow ml-8 mr-8 overflow-y-auto h-100">
+        <h2 className='text-xl text-left font-bold mb-4 mt-4 ml-10'>Bought Items</h2>
+        <ul className='text-left ml-10'>
           {boughtItems.map((item) => (
-            <li key={item._id}>
+            <li className="mt-4"key={item._id}>
               {item.name} - ${item.cost} by {item.buyer ? item.buyer.username : 'Unknown'}
               <button onClick={() => handleDeleteBoughtItem(item._id)} className="bg-red-500 text-white p-2 ml-2">Delete</button>
             </li>
           ))}
         </ul>
+        </div>
       </div>
     </div>
   );
