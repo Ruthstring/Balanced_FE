@@ -1,6 +1,6 @@
 import PersonalBalance from './PersonalBalance';
 import React, { useState, useEffect } from 'react';
-
+import Chart from './Chart';
 
 const BalancePage = () => {
   const [balances, setBalances] = useState([]);
@@ -62,6 +62,10 @@ const BalancePage = () => {
   return (
     <div className="balances-page">
       
+      <div className="chart-container">
+        <Chart balances={balances} />
+      </div>
+
       <div className="global-balances purple-box rounded-xl shadow-lg mt-10 mb-8 pb-10">
         <h1 className="text-left text-xl font-bold ml-10 mt-10">Global Balance</h1>
         <ul>
