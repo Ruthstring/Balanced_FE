@@ -60,8 +60,9 @@ const BalancePage = () => {
 
   return (
     <div className="balances-page">
-      <h1>Balances</h1>
-      <div className="global-balances">
+      
+      <div className="global-balances purple-box rounded-xl shadow-lg mt-10 mb-8 pb-10">
+        <h1 className="text-left text-xl font-bold ml-10 mt-10">Global Balance</h1>
         <ul>
           {balances.map(balance => (
             <li key={balance._id}>
@@ -70,7 +71,9 @@ const BalancePage = () => {
           ))}
         </ul>
       </div>
+      <div className="green-box rounded-xl shadow-lg">
        <PersonalBalance balances={balances} />
+       </div>
     </div>
   );
 };

@@ -266,8 +266,8 @@ const PersonalBalance = ({ balances }) => {
 
 
   return (
-    <div className="personal-balance-section">
-      <h2>Personal Balance</h2>
+    <div className="personal-balance-section mt-10 mb-10 rounded-xl">
+      <h2 className="text-left text-xl font-bold ml-10 mt-10">Personal Balance</h2>
       <div>
         <h3>You Owe</h3>
         <ul>

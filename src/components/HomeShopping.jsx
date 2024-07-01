@@ -29,18 +29,18 @@ const HomeShopping = () => {
   }, []);
 
   return (
-    <div className="p-4 h-full flex flex-col justify-between">
+    <div className="green-box border-8 border-black rounded-xl mt-20 mr-8 p-4 h-full flex flex-col">
     <div>
-      <h1 className="text-xl font-bold mb-2">Preview of Shopping List</h1>
-      <ul className="list-disc list-inside mb-4">
+      <h1 className="text-xl text-left ml-5 font-bold mb-2 mt-8">Preview of Shopping List</h1>
+      <ul className="text-left ml-5 list-disc list-inside mb-4">
         {items.map(item => (
           <li key={item._id} className="text-sm">{item.name}</li>
         ))}
       </ul>
     </div>
-    <div className="text-right">
+    <div className="text-left mt-72 ml-5">
       <Link to="/shoppingpage">
-        <button className="bg-blue-500 text-white py-2 px-4 rounded">Go to Shopping Page</button>
+        <button className="btn-see">See more</button>
       </Link>
     </div>
   </div>
