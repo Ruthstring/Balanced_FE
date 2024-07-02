@@ -2,52 +2,108 @@ import React, {useState } from "react"
 import { useNavigate} from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
+//TRYING TO STORE USER ID IN LOCAL STORAGE TOO
+
 const Login = ({ setUser }) => {
-    const [formValues, setFormValues] = useState({
-      email: '',
-      password: '',
-    });
-    
-    const [passwordVisible, setPasswordVisible] = useState(false);
+  const [formValues, setFormValues] = useState({
+    email: '',
+    password: '',
+  });
+  
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const toggleVisibility = () => {
+  const toggleVisibility = () => {
     setPasswordVisible(!passwordVisible);
-    };
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-  
-    const navigate = useNavigate();
-  
-    const handleInput = (e) => {
-      setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    };
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      setError(null);
-      setLoading(true);
-      try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formValues),
-        });
-  
-        const data = await response.json();
-        console.log('Token received:', data.token)
+  };
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-        localStorage.setItem('token', data.token);
-        localStorage.setItem("username",data.username);//store the username
-        console.log(data);
-        setUser(true);
-        navigate('/home');
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+  const navigate = useNavigate();
+
+  const handleInput = (e) => {
+    setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setError(null);
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formValues),
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
       }
-    };
+
+      const data = await response.json();
+      console.log('Token received:', data.token);
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('username', data.username); // Store the username
+      localStorage.setItem('userId', data.userId); // Store the user ID
+      console.log(data);
+      setUser(true);
+      navigate('/home');
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+//OLD APPROACH
+// const Login = ({ setUser }) => {
+//     const [formValues, setFormValues] = useState({
+//       email: '',
+//       password: '',
+//     });
+    
+//     const [passwordVisible, setPasswordVisible] = useState(false);
+
+//     const toggleVisibility = () => {
+//     setPasswordVisible(!passwordVisible);
+//     };
+//     const [error, setError] = useState(null);
+//     const [loading, setLoading] = useState(false);
+  
+//     const navigate = useNavigate();
+  
+//     const handleInput = (e) => {
+//       setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+//     };
+  
+//     const handleSubmit = async (e) => {
+//       e.preventDefault();
+  
+//       setError(null);
+//       setLoading(true);
+//       try {
+//         const response = await fetch('http://localhost:5000/api/auth/login', {
+//           method: 'POST',
+//           headers: { 'Content-Type': 'application/json' },
+//           body: JSON.stringify(formValues),
+//         });
+  
+//         const data = await response.json();
+//         console.log('Token received:', data.token)
+
+//         localStorage.setItem('token', data.token);
+//         localStorage.setItem("username",data.username);//store the username
+//         console.log(data);
+//         setUser(true);
+//         navigate('/home');
+//       } catch (error) {
+//         setError(error.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
   
     return (
         <div className="flex flex-col sm:py-36 py-24 sm:px-52 px-4 w-full sm:w-[50%] items-center" >
