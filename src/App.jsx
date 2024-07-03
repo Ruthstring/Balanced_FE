@@ -21,6 +21,7 @@ function App() {
     localStorage.removeItem('token');
   };
 
+  //checking user token 
   useEffect(() => {
     const isToken = localStorage.getItem('token');
     if (isToken) setUser(true);
