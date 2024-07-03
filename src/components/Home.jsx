@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import HomeBalance from "./HomeBalance";
 import HomeProfile from "./HomeProfile";
 import HomeShopping from "./HomeShopping";
+import Notifications from "./Notifications";
 
 const Home=()=>{
     // const [username, setUsername] = useState("");
@@ -36,7 +37,7 @@ const Home=()=>{
           setMessage('Error fetching profile.');
         }
       };
-      console.log(profile)
+      console.log(profile) 
       const fetchBalances = async () => {
         try {
           const response = await fetch('http://localhost:5000/api/auth/balances', {

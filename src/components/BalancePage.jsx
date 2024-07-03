@@ -31,7 +31,6 @@ const BalancePage = () => {
     }
   };
 
-
   return (
     <div className="balances-page">
 

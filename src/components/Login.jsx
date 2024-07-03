@@ -1,10 +1,10 @@
-import React, {useState } from "react"
-import { useNavigate} from "react-router-dom"
+import {useState } from "react"
+import { useNavigate, Navigate} from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import LoginImage from '../assets/imageforlogin.png';
 
 
-const Login = ({ setUser }) => {
+const Login = ({ user, setUser }) => {
     const [formValues, setFormValues] = useState({
       email: '',
       password: '',
@@ -50,7 +50,7 @@ const Login = ({ setUser }) => {
         setLoading(false);
       }
     };
-  
+   if(user) return <Navigate to="/home" />
     return (
       <div class ="logincontainerouter">
       <div class="logincontainer">

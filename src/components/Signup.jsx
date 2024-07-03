@@ -10,10 +10,13 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', { username, email, password });
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/register',
+        { username, email, password }
+      );
       console.log('Registration successful:', response.data);
       //to redirect to login page or handle success message
-      setSuccess(true); 
+      setSuccess(true);
     } catch (error) {
       console.error('Registration failed:', error.response.data);
       // Handle error, e.g., display error message to user
