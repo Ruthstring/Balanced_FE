@@ -58,10 +58,12 @@ const PersonalBalance = ({ balances }) => {
   };
 console.log(personalStatus)
   return (
-    <div className="personal-balance-section mt-10 mb-10 rounded-xl">
-      <h2 className="text-left text-xl font-bold ml-10 mt-10">Personal Balance</h2>
+    <>
+    <h2 className="text-left text-xl font-bold ml-10 mt-10">Personal Balance</h2>
+    <div className="personal-balance-section grid grid-cols-2 mt-10 mb-10 rounded-xl">
+      
       <div>
-        <h3>You Owe</h3>
+        <h3 className="text-l font-bold">You Owe</h3>
         <ul>
           {personalStatus.filter(owed=>owed.user.username==userName).map((debt, index) => (
             <li key={index}>
@@ -71,7 +73,7 @@ console.log(personalStatus)
         </ul>
       </div>
       <div>
-        <h3>Owed To You</h3>
+        <h3 className="text-l font-bold">Owed To You</h3>
         <ul>
           {personalStatus.filter(owed=>owed.userOwed.username==userName).map((credit, index) => (
             <li key={index}>
@@ -81,6 +83,7 @@ console.log(personalStatus)
         </ul>
       </div>
     </div>
+    </>
   );
 };
 

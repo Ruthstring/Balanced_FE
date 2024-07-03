@@ -102,6 +102,7 @@ const HomeProfile = ({ username }) => {
           alt="Profile"
           onClick={() => document.getElementById('profile-picture-upload').click()}
           style={{ cursor: 'pointer' }}
+          className='profile-image'
         />
         <ProfilePictureUpload setProfilePicture={setProfilePicture} />
       </div>
