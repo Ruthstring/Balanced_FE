@@ -1,6 +1,8 @@
 import React, {useState } from "react"
 import { useNavigate} from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import LoginImage from '../assets/imageforlogin.png';
+
 
 const Login = ({ setUser }) => {
     const [formValues, setFormValues] = useState({
@@ -50,31 +52,45 @@ const Login = ({ setUser }) => {
     };
   
     return (
-        <div className="flex flex-col sm:py-36 py-24 sm:px-52 px-4 w-full sm:w-[50%] items-center" >
-      <form 
+      <div class ="logincontainerouter">
+      <div class="logincontainer">
+        <img src={LoginImage} alt="Login Visual" />
+
+        {/* <div className="flex flex-col sm:py-36 py-24 sm:px-52 px-4 w-full sm:w-[50%] items-center" > */}
+
+        <div className="loginform">
+        <h1 className="mb-12"> Balanced</h1>
+        <p className="text-xl mb-10">Log in</p>
+        <form 
         className="flex flex-col items-center gap-8"
        onSubmit={handleSubmit}>
-        <h1>Log in</h1>
+        
+        <div className="relative">
         <label htmlFor='email'>Email</label>
-        <input className="input input-bordered sm:w-96 bg-base-200" placeholder="email" type='text' name='email' id='email' value={formValues.email} onChange={handleInput} />
-      
+        <input className="input input-bordered sm:w-96 bg-base-200" placeholder="Email" type='text' name='email' id='email' value={formValues.email} onChange={handleInput} />
+        </div>
+
         <div className="relative">
         <label htmlFor='password'>Password</label>
         <input className="input input-bordered sm:w-96  bg-base-200" type={passwordVisible ? "text" : "password"} placeholder="Password"  name='password' id='password' value={formValues.password} onChange={handleInput} /> 
         <button
         type="button"
         onClick={toggleVisibility}
-        className="absolute right-2 top-10 transform -translate-y-1/2"
+        className="absolute right-2 top-10 transform -translate-y-2/3"
         >
         {passwordVisible ? <FaEyeSlash /> : <FaEye />}
         </button>
        
        </div>
-        <button disabled={loading}>Login</button>
+        <button disabled={loading} class="btn-see">Login</button>
          
        
         {error && <p>{error}</p>}
       </form>
+      </div>
+
+      </div>
+
       </div>
     );
   };

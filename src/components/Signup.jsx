@@ -23,7 +23,11 @@ const RegisterForm = () => {
 
   return (
     <>
-    <h1>Sign up</h1>
+    <div class ="logincontainerouter">
+
+    <div class="logincontainer">
+
+    <p className="text-xl mb-10">Sign up</p>
     
     {success ? (
         <div>
@@ -32,7 +36,8 @@ const RegisterForm = () => {
         </div>
       ) : (
         <>
-        <p>New here? Register for free</p>
+        
+        <p className="flex flex-col items-center gap-8">New here? Register for free</p>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -57,7 +62,8 @@ const RegisterForm = () => {
         </>
       )}
     
-    
+    </div>
+    </div>
     </>
   );
 };
