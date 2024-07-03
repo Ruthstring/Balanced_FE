@@ -3,7 +3,9 @@ html, body {
   margin: 0;
   padding: 0;
   background-color: #1D1678;
+  font-family: 'Roboto', sans-serif;
 }
+
 #root {
    max-width: 1400px; 
    height:auto;
@@ -13,7 +15,69 @@ html, body {
   background-color: #1D1678;
 }
 
-/*GENERAL RULES*/
+
+
+.logincontainerouter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 20px 50px 20px;
+}
+
+
+.logincontainer {
+  display: flex;
+  border: 2px solid black;
+  border-radius: 10px;
+  
+  max-width: 70%;
+  width: 100%;
+  /* height: auto; */
+  min-height: 65vh;
+  background-color: #8575FF;
+  overflow: hidden;
+}
+
+.logincontainer img {
+  width: 50%;
+  height: auto;
+}
+
+.loginform {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  width: 50%;
+}
+
+.loginform h1 {
+   /* Adjust font size for the title */
+  font-weight: bold;
+  font-size: 3rem;
+  margin-bottom: 3rem; /* Add margin below the title */
+  letter-spacing: 0.02em;
+}
+
+.loginform p {
+  font-size: 1.5rem; /* Adjust font size for the title */
+  font-weight: bold;
+  margin-bottom: 3rem; /* Add margin below the title */
+}
+
+
+@media (max-width: 768px) {
+  .logincontainer {
+    flex-direction: column;
+    max-width: 90%;
+  }
+
+  .logincontainer img, .loginform {
+    width: 100%;
+  }
+}
+
+
 .btn-see{
   background-color: #ADF6D1;
   border-radius: 20px;
