@@ -96,7 +96,7 @@ const HomeProfile = ({ username }) => {
 
   return (
     <>
-      <div className="imgPlaceholder imgml-10 col-span-1 size-28">
+      <div className="imgPlaceholder imgml-10 col-span-1 size-40">
         <img
           src={profilePicture}
           alt="Profile"
@@ -107,9 +107,9 @@ const HomeProfile = ({ username }) => {
         <ProfilePictureUpload setProfilePicture={setProfilePicture} />
       </div>
       <div className="col-span-1">
-        <h1>Welcome back</h1>
-        <div className="black-div"> {username} </div>
-        <div className="black-div">{message}</div>
+        <h1 className="text-xl">Welcome back</h1>
+        <div className="black-div mt-6"> <h1 className="text-xl">{username} </h1></div>
+        <div className="black-div mt-8"><h1 className="text-xl">{message}</h1></div>
       </div>
       {options.length > 0 && (
         <div className="options-container">

@@ -18,8 +18,8 @@ const HomeBalance = ({ userBalance }) => {
       {userBalance !== null && userBalance !== undefined ? (
         <div className="flex col cols-2">
           <div>
-            <p className={`text-4xl font-bold mt-6 ml-14 ${balanceColorClass}`}>Balance: </p>
-            <p className={`text-5xl font-bold mt-4 mb-8 ml-8 ${balanceColorClass}`}>${userBalance.toFixed(2)}</p>
+            <p className={`text-4xl text-left font-bold mt-6 ml-12 ${balanceColorClass}`}>Balance </p>
+            <p className={`text-5xl font-bold mt-4 mb-8 ml-12 ${balanceColorClass}`}>${userBalance.toFixed(2)}</p>
             <Link to="/balancepage">
             <button className="btn-see mb-6 mt-8">See more</button>
             </Link>
