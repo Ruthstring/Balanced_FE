@@ -39,7 +39,7 @@ const Chart = ({ balances }) => {
                     weight: '600', // '600' corresponds to 'semibold' in Tailwind CSS
                     size: 14 // Adjust font size if needed
                 },
-                formatter: (value) => value // Display the value inside the bar
+                formatter: (value) => value.toFixed(2) // Display the value inside the bar
             },
             annotation: {
                 annotations: {
