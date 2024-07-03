@@ -1,7 +1,13 @@
+
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Chart as ChartJS } from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation';
+
+// Register the annotation plugin
+ChartJS.register(annotationPlugin);
 
 const Chart = ({ balances }) => {
     const data = {
@@ -12,7 +18,10 @@ const Chart = ({ balances }) => {
                 backgroundColor: balances.map(balance =>
                     balance.balance >= 0 ? 'rgba(75, 192, 192, 0.5)' : 'rgba(255, 99, 132, 0.5)'
                 ),
-                barThickness: 50 // Adjust bar thickness if needed
+                barThickness: 'flex', // Adjust bar thickness dynamically
+                maxBarThickness: 50, // Set maximum bar thickness
+                categoryPercentage: 0.6, // Adjust category width percentage
+                barPercentage: 1, // Adjust bar width percentage
             }
         ]
     };
@@ -31,6 +40,17 @@ const Chart = ({ balances }) => {
                     size: 14 // Adjust font size if needed
                 },
                 formatter: (value) => value // Display the value inside the bar
+            },
+            annotation: {
+                annotations: {
+                    line1: {
+                        type: 'line',
+                        yMin: 0,
+                        yMax: 0,
+                        borderColor: 'rgba(0,0,0,0.5)',
+                        borderWidth: 2,
+                    }
+                }
             }
         },
         scales: {
@@ -47,7 +67,9 @@ const Chart = ({ balances }) => {
                 },
                 border: {
                     display: false // Remove x-axis border
-                }
+                },
+                barPercentage: 0.9, // Adjust bar width percentage
+                categoryPercentage: 0.9 // Adjust category width percentage
             },
             y: {
                 beginAtZero: true,
@@ -65,8 +87,8 @@ const Chart = ({ balances }) => {
     };
 
     return (
-        <div className="w-full md:w-1/2 lg:w-1/2 mx-auto p-4">
-            <div className="mx-auto">
+        <div className="md:w-1/2 lg:w-1/2 mx-auto px-20">
+            <div className="bg-white bg-opacity-15 p-4 rounded-md gap-x-14">
                 <Bar data={data} options={options} plugins={[ChartDataLabels]} />
             </div>
         </div>
