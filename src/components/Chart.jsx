@@ -29,7 +29,7 @@ const Chart = ({ balances }) => {
     const options = {
         plugins: {
             legend: {
-                display: false // Disable the legend
+                display: false, // Disable the legend
             },
             datalabels: {
                 anchor: 'center', // Center the label inside the bar
@@ -61,7 +61,7 @@ const Chart = ({ balances }) => {
                 ticks: {
                     color: '#000', // Set tick labels color to black
                     font: {
-                        size: 14, // Adjust font size for tick labels
+                        size: 16, // Adjust font size for tick labels
                         weight: '600' // Adjust font weight for tick labels
                     }
                 },
@@ -87,11 +87,16 @@ const Chart = ({ balances }) => {
     };
 
     return (
-        <div className="md:w-1/2 lg:w-1/2 mx-auto px-20">
+        <div className="chart md:w-full mx-auto px-10">
             <div className="bg-white bg-opacity-15 p-4 rounded-md gap-x-14">
                 <Bar data={data} options={options} plugins={[ChartDataLabels]} />
             </div>
         </div>
+        // <div className="md:w-1/2 mx-auto px-20">
+        //     <div className="bg-white bg-opacity-15 p-4 rounded-md gap-x-14">
+        //         <Bar data={data} options={options} plugins={[ChartDataLabels]} />
+        //     </div>
+        // </div>
     );
 };
 

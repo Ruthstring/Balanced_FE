@@ -117,7 +117,7 @@ const PersonalBalance = ({ balances }) => {
 
   return (
     <>
-    <h2 className="text-left text-xl font-bold ml-10 mt-10">Personal Balance</h2>
+    
     <div className="personal-balance-section grid grid-cols-2 mt-10 mb-10 rounded-xl">
       
       <div>

@@ -1,5 +1,5 @@
 import {useState } from "react"
-import { useNavigate, Navigate} from "react-router-dom"
+import { useNavigate, Navigate, Link} from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import LoginImage from '../assets/imageforlogin.png';
 
@@ -51,7 +51,9 @@ const Login = ({ user, setUser }) => {
       }
     };
    if(user) return <Navigate to="/home" />
-    return (
+   
+   
+   return (
       <div class ="logincontainerouter">
       <div class="logincontainer">
         <img src={LoginImage} alt="Login Visual" />
@@ -66,27 +68,40 @@ const Login = ({ user, setUser }) => {
        onSubmit={handleSubmit}>
         
         <div className="relative">
-        <label htmlFor='email'>Email</label>
+        
         <input className="input input-bordered sm:w-96 bg-base-200" placeholder="Email" type='text' name='email' id='email' value={formValues.email} onChange={handleInput} />
         </div>
 
         <div className="relative">
-        <label htmlFor='password'>Password</label>
-        <input className="input input-bordered sm:w-96  bg-base-200" type={passwordVisible ? "text" : "password"} placeholder="Password"  name='password' id='password' value={formValues.password} onChange={handleInput} /> 
-        <button
-        type="button"
-        onClick={toggleVisibility}
-        className="absolute right-2 top-10 transform -translate-y-2/3"
-        >
-        {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-        </button>
+        <label htmlFor='password'></label>
+        
+        <input 
+    className="input input-bordered sm:w-96 bg-base-200 pr-10" // Add pr-10 to give space for the icon
+    type={passwordVisible ? "text" : "password"} 
+    placeholder="Password"  
+    name='password' 
+    id='password' 
+    value={formValues.password} 
+    onChange={handleInput} 
+  />
+  <button
+    type="button"
+    onClick={toggleVisibility}
+    className="absolute right-2 top-1/2 transform -translate-y-1/2" // Adjust the position to be vertically centered
+  >
+    {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+  </button>
+</div>
+        
        
-       </div>
         <button disabled={loading} class="btn-see">Login</button>
          
        
         {error && <p>{error}</p>}
       </form>
+      <p className="mt-4">
+              New here? <Link to="/signup" className="text-blue-500 underline">Sign up</Link>
+            </p>
       </div>
 
       </div>
