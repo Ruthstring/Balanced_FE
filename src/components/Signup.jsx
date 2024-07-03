@@ -10,10 +10,13 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', { username, email, password });
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/register',
+        { username, email, password }
+      );
       console.log('Registration successful:', response.data);
       //to redirect to login page or handle success message
-      setSuccess(true); 
+      setSuccess(true);
     } catch (error) {
       console.error('Registration failed:', error.response.data);
       // Handle error, e.g., display error message to user
@@ -23,41 +26,39 @@ const RegisterForm = () => {
 
   return (
     <>
-    <h1>Sign up</h1>
-    
-    {success ? (
+      <h1>Sign up</h1>
+
+      {success ? (
         <div>
           <p>Registration successful! You can now login.</p>
           {/* <button onClick={() => window.location.href = '/login'}>Go to Login</button> */}
         </div>
       ) : (
         <>
-        <p>New here? Register for free</p>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Enter your username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">Register</button>
-        </form>
+          <p>New here? Register for free</p>
+          <form onSubmit={handleSubmit}>
+            <input
+              type='text'
+              placeholder='Enter your username'
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type='email'
+              placeholder='Enter your email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type='password'
+              placeholder='Enter your password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type='submit'>Register</button>
+          </form>
         </>
       )}
-    
-    
     </>
   );
 };

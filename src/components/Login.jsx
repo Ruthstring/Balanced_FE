@@ -1,8 +1,8 @@
-import React, {useState } from "react"
-import { useNavigate} from "react-router-dom"
+import {useState } from "react"
+import { useNavigate, Navigate} from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const Login = ({ setUser }) => {
+const Login = ({ user, setUser }) => {
     const [formValues, setFormValues] = useState({
       email: '',
       password: '',
@@ -48,7 +48,7 @@ const Login = ({ setUser }) => {
         setLoading(false);
       }
     };
-  
+   if(user) return <Navigate to="/home" />
     return (
         <div className="flex flex-col sm:py-36 py-24 sm:px-52 px-4 w-full sm:w-[50%] items-center" >
       <form 
