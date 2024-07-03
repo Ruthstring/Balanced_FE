@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-//CHAT GPT APPROACH
+import axios from 'axios';
 
 const PersonalBalance = ({ balances }) => {
   const [personalStatus, setPersonalStatus] = useState([]);
@@ -59,6 +58,8 @@ const PersonalBalance = ({ balances }) => {
 
   const settleDebt = async (debtId, action) => {
     try {
+      console.log("debts info:",debtsInfo)
+      console.log('Settling debt with ID:', debtId, 'and action:', action);
       const token = localStorage.getItem('token');
 
       if (!token) {
@@ -66,8 +67,8 @@ const PersonalBalance = ({ balances }) => {
         return;
       }
 
-      const response = await fetch(`http://localhost:5000/api/auth/debts/${debtId}/settle`, {
-        method: 'PUT',
+      const response = await fetch(`http://localhost:5000/api/auth/debts/${debtId}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -132,6 +133,276 @@ const PersonalBalance = ({ balances }) => {
 };
 
 export default PersonalBalance;
+
+
+// //SECOND approach
+// const PersonalBalance = ({ balances }) => {
+//   const [personalStatus, setPersonalStatus] = useState([]);
+//   const [userName, setUserName] = useState(null);
+//   const [debtsInfo, setDebtsInfo] = useState([]);
+//   const userId = localStorage.getItem('userId'); // Get user ID from local storage
+
+//   useEffect(() => {
+//     setUserName(localStorage.getItem('username'));
+//   }, []);
+
+//   useEffect(() => {
+//     const calculatePersonalStatus = (balances, username) => {
+//       const owedInfo = [];
+
+//       const usersOwing = balances.filter((user) => user.balance < 0);
+//       const usersOwed = balances.filter((user) => user.balance > 0);
+
+//       usersOwing.forEach((userOwing) => {
+//         usersOwed.forEach((userOwed) => {
+//           if (userOwing.balance < 0 && userOwed.balance > 0) {
+//             const owed = {
+//               userOwed: {
+//                 username: userOwed.username,
+//                 _id: userOwed._id,
+//               },
+//               moneyOwed: Math.min(-userOwing.balance, userOwed.balance),
+//               user: {
+//                 username: userOwing.username,
+//                 _id: userOwing._id,
+//               },
+//             };
+
+//             userOwed.balance -= owed.moneyOwed;
+//             userOwing.balance += owed.moneyOwed;
+
+//             owedInfo.push(owed);
+//           }
+//         });
+//       });
+
+//       setPersonalStatus(owedInfo);
+//     };
+
+//     calculatePersonalStatus(balances, userName);
+//   }, [balances, userName]);
+
+//   useEffect(() => {
+//     console.log(debtsInfo)
+//     setDebtsInfo(
+//       personalStatus.filter(
+//         (owed) =>
+//           owed.user.username === userName || owed.userOwed.username === userName
+//       )
+//     );
+//   }, [personalStatus]);
+
+
+//   const settleDebt = async (debtId, action) => {
+//     try {
+//       console.log('Settling debt with ID:', debtId, 'and action:', action);
+//       const token = localStorage.getItem('token');
+
+//       if (!token) {
+//         console.error('Token not found in local storage.');
+//         return;
+//       }
+
+//       const response = await fetch(`http://localhost:5000/api/auth/debts/${debtId}`, {
+//         method: 'PATCH',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           Authorization: `Bearer ${token}`,
+//         },
+//         body: JSON.stringify({ action }),
+//       });
+
+//       if (!response.ok) {
+//         throw new Error('Error settling debt');
+//       }
+
+//       const updatedDebt = await response.json();
+
+//       // Update the debtsInfo state with the updated debt
+//       setDebtsInfo((prevDebtsInfo) =>
+//         prevDebtsInfo.map((debt) =>
+//           debt._id === updatedDebt._id ? updatedDebt : debt
+//         )
+//       );
+//     } catch (error) {
+//       console.error('Error settling debt:', error);
+//     }
+//   };
+
+//   return (
+//     <div className='personal-balance-section mt-10 mb-10 rounded-xl'>
+//       <h2 className='text-left text-xl font-bold ml-10 mt-10'>
+//         Personal Balance
+//       </h2>
+//       <div>
+//         <h3>You Owe</h3>
+//         <ul>
+//           {debtsInfo
+//             .filter((debt) => debt.user.username === userName)
+//             .map((debt) => (
+//               <li key={debt._id}>
+//                 You owe {debt.userOwed.username}: ${debt.moneyOwed.toFixed(2)}
+//                 <button onClick={() => settleDebt(debt._id, 'markAsPaid')}>
+//                   Mark as Paid
+//                 </button>
+//               </li>
+//             ))}
+//         </ul>
+//       </div>
+//       <div>
+//         <h3>Owed To You</h3>
+//         <ul>
+//           {debtsInfo
+//             .filter((debt) => debt.userOwed.username === userName)
+//             .map((debt) => (
+//               <li key={debt._id}>
+//                 {debt.user.username} owes you: ${debt.moneyOwed.toFixed(2)}
+//                 <button onClick={() => settleDebt(debt._id, 'confirmPayment')}>
+//                   Confirm Payment
+//                 </button>
+//               </li>
+//             ))}
+//         </ul>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PersonalBalance;
+
+
+// //CHAT GPT 1 APPROACH
+
+// const PersonalBalance = ({ balances }) => {
+//   const [personalStatus, setPersonalStatus] = useState([]);
+//   const [userName, setUserName] = useState(null);
+//   const [debtsInfo, setDebtsInfo] = useState([]);
+//   const userId = localStorage.getItem('userId'); // Get user ID from local storage
+
+//   useEffect(() => {
+//     setUserName(localStorage.getItem('username'));
+//   }, []);
+
+//   useEffect(() => {
+//     const calculatePersonalStatus = (balances, username) => {
+//       const owedInfo = [];
+
+//       const usersOwing = balances.filter((user) => user.balance < 0);
+//       const usersOwed = balances.filter((user) => user.balance > 0);
+
+//       usersOwing.forEach((userOwing) => {
+//         usersOwed.forEach((userOwed) => {
+//           if (userOwing.balance < 0 && userOwed.balance > 0) {
+//             const owed = {
+//               userOwed: {
+//                 username: userOwed.username,
+//                 _id: userOwed._id,
+//               },
+//               moneyOwed: Math.min(-userOwing.balance, userOwed.balance),
+//               user: {
+//                 username: userOwing.username,
+//                 _id: userOwing._id,
+//               },
+//             };
+
+//             userOwed.balance -= owed.moneyOwed;
+//             userOwing.balance += owed.moneyOwed;
+
+//             owedInfo.push(owed);
+//           }
+//         });
+//       });
+
+//       setPersonalStatus(owedInfo);
+//     };
+
+//     calculatePersonalStatus(balances, userName);
+//   }, [balances, userName]);
+
+//   useEffect(() => {
+//     setDebtsInfo(
+//       personalStatus.filter(
+//         (owed) =>
+//           owed.user.username === userName || owed.userOwed.username === userName
+//       )
+//     );
+//   }, [personalStatus]);
+
+//   const settleDebt = async (debtId, action) => {
+//     try {
+//       const token = localStorage.getItem('token');
+
+//       if (!token) {
+//         console.error('Token not found in local storage.');
+//         return;
+//       }
+
+//       const response = await fetch(`http://localhost:5000/api/auth/debts/${debtId}/settle`, {
+//         method: 'PUT',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           Authorization: `Bearer ${token}`,
+//         },
+//         body: JSON.stringify({ action }),
+//       });
+
+//       if (!response.ok) {
+//         throw new Error('Error settling debt');
+//       }
+
+//       const updatedDebt = await response.json();
+
+//       // Update the debtsInfo state with the updated debt
+//       setDebtsInfo((prevDebtsInfo) =>
+//         prevDebtsInfo.map((debt) =>
+//           debt._id === updatedDebt._id ? updatedDebt : debt
+//         )
+//       );
+//     } catch (error) {
+//       console.error('Error settling debt:', error);
+//     }
+//   };
+
+//   return (
+//     <div className='personal-balance-section mt-10 mb-10 rounded-xl'>
+//       <h2 className='text-left text-xl font-bold ml-10 mt-10'>
+//         Personal Balance
+//       </h2>
+//       <div>
+//         <h3>You Owe</h3>
+//         <ul>
+//           {debtsInfo
+//             .filter((debt) => debt.user.username === userName)
+//             .map((debt) => (
+//               <li key={debt._id}>
+//                 You owe {debt.userOwed.username}: ${debt.moneyOwed.toFixed(2)}
+//                 <button onClick={() => settleDebt(debt._id, 'markAsPaid')}>
+//                   Mark as Paid
+//                 </button>
+//               </li>
+//             ))}
+//         </ul>
+//       </div>
+//       <div>
+//         <h3>Owed To You</h3>
+//         <ul>
+//           {debtsInfo
+//             .filter((debt) => debt.userOwed.username === userName)
+//             .map((debt) => (
+//               <li key={debt._id}>
+//                 {debt.user.username} owes you: ${debt.moneyOwed.toFixed(2)}
+//                 <button onClick={() => settleDebt(debt._id, 'confirmPayment')}>
+//                   Confirm Payment
+//                 </button>
+//               </li>
+//             ))}
+//         </ul>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PersonalBalance;
 
 // //MARIAS ATTEMPT
 
