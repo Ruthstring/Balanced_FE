@@ -1,16 +1,16 @@
-import BalancePage from "./ShoppingPage";
-import { Link } from "react-router-dom"; 
+import BalancePage from './ShoppingPage';
+import { Link } from 'react-router-dom';
 
+const HomeBalance = ({ user }) => {
+  // Determine the color based on the balance
+  const balanceColorClass =
+    user.balance >= 0 ? 'text-green-500' : 'text-red-500';
 
-const HomeBalance = ({ userBalance }) => {
-  
-   // Determine the color based on the balance
-   const balanceColorClass = userBalance >= 0 ? "text-green-500" : "text-red-500";
-  
-
-   // Determine the image based on the balance
-  const balanceImage = userBalance >= 0 ? "../src/assets/PositiveBalance.svg" : "../src/assets/NegativeBalance.svg";
-
+  // Determine the image based on the balance
+  const balanceImage =
+    user.balance >= 0
+      ? '../src/assets/PositiveBalance.svg'
+      : '../src/assets/NegativeBalance.svg';
   return (
     <>
     
@@ -60,4 +60,3 @@ const HomeBalance = ({ userBalance }) => {
 };
 
 export default HomeBalance;
-

@@ -16,7 +16,7 @@ const BalancePage = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
       if (response.ok) {
@@ -64,5 +64,3 @@ const BalancePage = () => {
 };
 
 export default BalancePage;
-
-

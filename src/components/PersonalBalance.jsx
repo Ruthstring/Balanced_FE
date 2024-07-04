@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const PersonalBalance = ({ balances }) => {
+const PersonalBalance = ({ user, balances }) => {
   const [personalStatus, setPersonalStatus] = useState([]);
   const [userName, setUserName] = useState(null);
 
@@ -8,10 +8,11 @@ const PersonalBalance = ({ balances }) => {
     setUserName(localStorage.getItem('username'));
   }, []);
 
+ 
+
   useEffect(() => {
     const calculatePersonalStatus = async (balances, username) => {
       const user = balances.find((user) => user.username === username);
-      console.log('User:', user);
 
       const owedInfo = [];
 
@@ -47,10 +48,10 @@ const PersonalBalance = ({ balances }) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
-          body: JSON.stringify({ debts: owedInfo }),
+          // body: JSON.stringify({ debts: owedInfo }),
         });
-        const data = await response.json();
-        console.log(data);
+        // const data = await response.json();
+        // console.log(data);
       } catch (err) {
         console.log(err);
       }
@@ -60,60 +61,7 @@ const PersonalBalance = ({ balances }) => {
   }, [balances, userName]);
   console.log(personalStatus);
 
-  // useEffect(() => {
-  //   const addDebtsInfo = async (debtsInfo) => {
-  //     const userId = debtsInfo[0]?.userOwed?._id;
-  //     if (!userId) {
-  //       console.error('User ID not found');
-  //       return;
-  //     }
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:5000/api/auth/users/${userId}`,
-  //         {
-  //           method: 'PUT',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //             Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //           },
-  //           body: JSON.stringify({ debts: [...debtsInfo] }),
-  //         }
-  //       );
-
-  //       const data = await response.json();
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.error('Error creating household:', error);
-  //     }
-  //   };
-  //   addDebtsInfo(debtsInfo);
-  // }, [personalStatus]);
-
-  // const settleDebt = async (userId, amount) => {
-  //   try {
-  //     const token = localStorage.getItem('token');
-
-  //     if (!token) {
-  //       console.error('Token not found in local storage.');
-  //       return;
-  //     }
-
-  //     const newDebtsInfo = debtsInfo.map((debt) => {
-  //       if (userId === debt.userOwed._id) {
-  //         debt.moneyOwed = 0;
-  //         debt.payedConfirmation = true;
-  //       }
-  //       if (userId === debt.user._id) {
-  //         debt.payed = true;
-  //       }
-  //     });
-
-  //     console.log(newDebtsInfo);
-
-  //   } catch (error) {
-  //     console.error('Error settling debt:', error);
-  //   }
-  // };
+ 
 
   return (
     <>

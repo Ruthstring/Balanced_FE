@@ -3,19 +3,21 @@ import { Link } from "react-router-dom";
 import emptyListImage from "../assets/empty-list.png"
 
 
-const HomeShopping = () => {
+const HomeShopping = (user, token) => {
   const [items, setItems] = useState([]);
-
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchItems = async (token) => {
       try {
-        const response = await fetch('http://localhost:5000/api/auth/shopping/items', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+        const response = await fetch(
+          'http://localhost:5000/api/auth/shopping/items',
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (response.ok) {
           const data = await response.json();
           setItems(data);
@@ -27,8 +29,8 @@ const HomeShopping = () => {
       }
     };
 
-    fetchItems();
-  }, []);
+    token && fetchItems(token);
+  }, [token]);
 
   return (
 
@@ -72,6 +74,6 @@ const HomeShopping = () => {
 
     
   );
-}
+};
 
 export default HomeShopping;

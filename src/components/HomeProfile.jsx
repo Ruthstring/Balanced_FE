@@ -1,35 +1,31 @@
-import axios from 'axios'; 
-import { useEffect,useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProfilePictureUpload from "../components/ProfilePictureUpload"
 
 
 
-const HomeProfile = ({ username }) => {
+const HomeProfile = ({ token, user }) => {
   const navigate = useNavigate();
+  //for household search and addition
   const [message, setMessage] = useState('');
   const [options, setOptions] = useState([]);
   const [householdName, setHouseholdName] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
-
+  // Checking if user belongs to a household:
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchHouseholdProfile = async (token) => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          setMessage('No token found');
-          return;
-        }
+        const response = await axios.get(
+          'http://localhost:5000/api/auth/profile',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-        // Fetch household information
-        const householdResponse = await axios.get('http://localhost:5000/api/auth/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (householdResponse.data.household) {
-          setMessage(` ${householdResponse.data.household.name}`);
+        if (response.data.household) {
+          setMessage(` ${response.data.household.name}`);
         } else {
           setMessage('No house added yet');
           setOptions(['Search for a house', 'Create a house']);
@@ -53,14 +49,14 @@ const HomeProfile = ({ username }) => {
       }
     };
 
-    fetchProfile();
-  }, [navigate]);
+    token && fetchHouseholdProfile(token);
+  }, [navigate, token]);
 
-  const handleCreateHousehold = async () => {
+  const handleCreateHousehold = async (token) => {
     try {
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/auth/households/create',
+        'http://localhost:5000/api/households/create',
         { name: householdName },
         {
           headers: {
@@ -75,11 +71,11 @@ const HomeProfile = ({ username }) => {
     }
   };
 
-  const handleJoinHousehold = async () => {
+  const handleJoinHousehold = async (token) => {
     try {
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/auth/households/join',
+        'http://localhost:5000/api/households/join',
         { name: householdName },
         {
           headers: {
@@ -87,6 +83,7 @@ const HomeProfile = ({ username }) => {
           },
         }
       );
+      // setMessage(`Household: ${response.data.household.name}`);
       setMessage(` ${response.data.household.name}`);
       setOptions([]);
     } catch (error) {
