@@ -5,6 +5,8 @@ import emptyListImage from "../assets/empty-list.png"
 
 const HomeShopping = (user, token) => {
   const [items, setItems] = useState([]);
+  
+  
   useEffect(() => {
     const fetchItems = async (token) => {
       try {
@@ -51,7 +53,7 @@ const HomeShopping = (user, token) => {
       )}
     </div>
     <div className="btn-shopping text-left absolute bottom-4 left-4 ml-6 mb-6">
-      <Link to="/shoppingpage">
+      <Link to="/auth/shoppingpage">
         <button className="btn-see">See more</button>
       </Link>
     </div>

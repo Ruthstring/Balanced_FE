@@ -11,6 +11,9 @@ const HomeProfile = ({ token, user }) => {
   const [message, setMessage] = useState('');
   const [options, setOptions] = useState([]);
   const [householdName, setHouseholdName] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
+
+  
   // Checking if user belongs to a household:
   useEffect(() => {
     const fetchHouseholdProfile = async (token) => {
@@ -105,7 +108,7 @@ const HomeProfile = ({ token, user }) => {
       </div>
       <div className="col-span-1">
         <h1 className="text-xl">Welcome back</h1>
-        <div className="black-div mt-6"> <h1 className="text-xl">{username} </h1></div>
+        <div className="black-div mt-6"> <h1 className="text-xl">{user.username} </h1></div>
         <div className="black-div mt-8"><h1 className="text-xl">{message}</h1></div>
       </div>
       {options.length > 0 && (

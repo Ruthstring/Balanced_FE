@@ -1,3 +1,4 @@
+import { data } from 'autoprefixer';
 import { useState, useEffect } from 'react';
 
 const PersonalBalance = ({ user, balances }) => {
@@ -5,6 +6,7 @@ const PersonalBalance = ({ user, balances }) => {
   const [userName, setUserName] = useState(null);
 
   useEffect(() => {
+    console.log(user)
     setUserName(localStorage.getItem('username'));
   }, []);
 
@@ -61,7 +63,36 @@ const PersonalBalance = ({ user, balances }) => {
   }, [balances, userName]);
   console.log(personalStatus);
 
- 
+  const markAsPaid = async (debtorId, creditorId) => {
+    try {
+      await fetch('http://localhost:5000/api/auth/markdebtpaid', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ householdId: user.household_id, debtorId, creditorId }),
+      });
+    
+    } catch (error) {
+      console.error('Error marking debt as paid:', error);
+    }
+  };
+
+  const confirmPayment = async (debtorId, creditorId) => {
+    try {
+      await fetch('http://localhost:5000/api/auth/confirmdebtpayment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ householdId: user.household_id, debtorId, creditorId }),
+      });
+    } catch (error) {
+      console.error('Error confirming debt payment:', error);
+    }
+  };
 
   return (
     <>
@@ -77,9 +108,7 @@ const PersonalBalance = ({ user, balances }) => {
               <li key={index}>
                 You owe {debt.userOwed.username}: ${debt.moneyOwed.toFixed(2)}
                 {/* {console.log(credit.debtor_id)} */}
-                <button
-                // onClick={() => settleDebt(debt.user._id, debt.moneyOwed)}
-                >
+                <button onClick={() => markAsPaid(debt.user._id, debt.userOwed._id)}>
                   Mark as Paid
                 </button>
               </li>
@@ -94,9 +123,7 @@ const PersonalBalance = ({ user, balances }) => {
             .map((credit, index) => (
               <li key={index}>
                 {credit.user.username} owes you: ${credit.moneyOwed.toFixed(2)}
-                <button
-                // onClick={() => settleDebt(credit.user._id, credit.moneyOwed)}
-                >
+                <button onClick={() => confirmPayment(credit.user._id, credit.userOwed._id)}>
                   Settle
                 </button>
               </li>

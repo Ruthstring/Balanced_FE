@@ -15,12 +15,12 @@ const HomeBalance = ({ user }) => {
     <>
     
       <div className="container balance-container">
-      {userBalance !== null && userBalance !== undefined ? (
+      {user.balance !== null && user.balance !== undefined ? (
         <div className="flex col cols-2">
           <div>
             <p className={`text-4xl text-left font-bold mt-6 ml-12 ${balanceColorClass}`}>Balance </p>
-            <p className={`text-5xl font-bold mt-4 mb-8 ml-12 ${balanceColorClass}`}>${userBalance.toFixed(2)}</p>
-            <Link to="/balancepage">
+            <p className={`text-5xl font-bold mt-4 mb-8 ml-12 ${balanceColorClass}`}>${user.balance.toFixed(2)}</p>
+            <Link to="/auth/balancepage">
             <button className="btn-see mb-6 mt-8">See more</button>
             </Link>
          </div>

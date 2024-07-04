@@ -3,54 +3,101 @@ import { useNavigate, Navigate, Link} from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import LoginImage from '../assets/imageforlogin.png';
 
+const Login = ({ auth, setAuth, user, setUser, setToken }) => {
+  const [formValues, setFormValues] = useState({
+    email: '',
+    password: '',
+  });
 
-const Login = ({ user, setUser }) => {
-    const [formValues, setFormValues] = useState({
-      email: '',
-      password: '',
-    });
-    
-    const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const toggleVisibility = () => {
+  const toggleVisibility = () => {
     setPasswordVisible(!passwordVisible);
-    };
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-  
-    const navigate = useNavigate();
-  
-    const handleInput = (e) => {
-      setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    };
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      setError(null);
-      setLoading(true);
-      try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formValues),
-        });
-  
-        const data = await response.json();
-        console.log('Token received:', data.token)
+  };
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-        localStorage.setItem('token', data.token);
-        localStorage.setItem("username",data.username);//store the username
-        console.log(data);
-        setUser(true);
-        navigate('/home');
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-   if(user) return <Navigate to="/home" />
+  const navigate = useNavigate();
+
+  const handleInput = (e) => {
+    setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setError(null);
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formValues),
+      });
+
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('username', data.currentUser.username); //store the username
+      setAuth(true);
+      setUser(data.currentUser);
+      setToken(data.token);
+      // navigate('/auth/home');
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  if (auth && user) return <Navigate to='/auth/home' />;
+
+//previous version before merge
+// const Login = ({ user, setUser }) => {
+//     const [formValues, setFormValues] = useState({
+//       email: '',
+//       password: '',
+//     });
+    
+//     const [passwordVisible, setPasswordVisible] = useState(false);
+
+//     const toggleVisibility = () => {
+//     setPasswordVisible(!passwordVisible);
+//     };
+//     const [error, setError] = useState(null);
+//     const [loading, setLoading] = useState(false);
+  
+//     const navigate = useNavigate();
+  
+//     const handleInput = (e) => {
+//       setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+//     };
+  
+//     const handleSubmit = async (e) => {
+//       e.preventDefault();
+  
+//       setError(null);
+//       setLoading(true);
+//       try {
+//         const response = await fetch('http://localhost:5000/api/auth/login', {
+//           method: 'POST',
+//           headers: { 'Content-Type': 'application/json' },
+//           body: JSON.stringify(formValues),
+//         });
+  
+//         const data = await response.json();
+//         console.log('Token received:', data.token)
+
+//         localStorage.setItem('token', data.token);
+//         localStorage.setItem("username",data.username);//store the username
+//         console.log(data);
+//         setUser(true);
+//         navigate('/home');
+//       } catch (error) {
+//         setError(error.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//    if(user) return <Navigate to="/home" />
    
    
    return (
