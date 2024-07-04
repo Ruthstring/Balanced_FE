@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import SignupImage from "../assets/imageforlogin.png";
+import { useNavigate, Navigate, Link} from "react-router-dom"
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
@@ -64,6 +65,9 @@ return (
               />
               <button type="submit" className="btn-see">Register</button>
             </form>
+            <p className="mt-4">
+              Already a member? <Link to="/" className="text-blue-500 underline">Login</Link>
+            </p>
           </>
         )}
       </div>
