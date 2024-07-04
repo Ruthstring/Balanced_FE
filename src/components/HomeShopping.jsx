@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import emptyListImage from "../assets/empty-list.png"
+
 
 const HomeShopping = () => {
   const [items, setItems] = useState([]);
@@ -29,33 +31,46 @@ const HomeShopping = () => {
   }, []);
 
   return (
-    <div className="green-box border-8 border-black rounded-xl mt-20 mr-8 p-4 h-full flex flex-col">
+
+    <div className="shopping-container green-box border-8 border-black rounded-xl mt-20 mr-8 p-4 h-full flex flex-col relative">
     <div>
-      <h1 className="text-xl text-left ml-5 font-bold mb-2 mt-8"> Shopping List</h1>
-      <ul className="text-left ml-5 list-disc list-inside mb-4">
-        {items.map(item => (
-          <li key={item._id} className="text-sm">{item.name}</li>
-        ))}
-      </ul>
+      <h1 className="text-xl text-left ml-5 font-bold mb-2 mt-8">Shopping List</h1>
+      {items.length === 0 ? (
+        <div className="text-center mt-8">
+          <img src={emptyListImage} alt="Empty Shopping List" className="w-48 h-48 mx-auto" />
+          <p className="text-sm mt-4">Your shopping list is currently empty</p>
+        </div>
+      ) : (
+        <ul className="text-left ml-5 list-disc list-inside mb-4">
+          {items.map(item => (
+            <li key={item._id} className="text-sm">{item.name}</li>
+          ))}
+        </ul>
+      )}
     </div>
-    <div className="text-left mt-72 ml-5">
+    <div className="btn-shopping text-left absolute bottom-4 left-4 ml-6 mb-6">
       <Link to="/shoppingpage">
         <button className="btn-see">See more</button>
       </Link>
     </div>
   </div>
+  //   <div className="green-box border-8 border-black rounded-xl mt-20 mr-8 p-4 h-full flex flex-col">
+  //   <div>
+  //     <h1 className="text-xl text-left ml-5 font-bold mb-2 mt-8"> Shopping List</h1>
+  //     <ul className="text-left ml-5 list-disc list-inside mb-4">
+  //       {items.map(item => (
+  //         <li key={item._id} className="text-sm">{item.name}</li>
+  //       ))}
+  //     </ul>
+  //   </div>
+  //   <div className="text-left mt-72 ml-5">
+  //     <Link to="/shoppingpage">
+  //       <button className="btn-see">See more</button>
+  //     </Link>
+  //   </div>
+  // </div>
 
-    // <>
-    //   <h1>Preview of Shopping List</h1>
-    //   <ul>
-    //     {items.slice(0, 5).map(item => ( // Displaying the first 5 items as a preview
-    //       <li key={item._id}>{item.name}</li>
-    //     ))}
-    //   </ul>
-    //   <Link to="/shoppingpage">
-    //     <button>Go to Shopping Page</button>
-    //   </Link>
-    // </>
+    
   );
 }
 

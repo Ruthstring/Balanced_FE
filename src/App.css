@@ -167,6 +167,13 @@ html, body {
   padding:0px;
 }
 
+.shopping-container{
+  max-height: 500px;
+}
+/* .btn-shopping{
+  margin-top:75%;
+} */
+
 /*HOME PROFILE*/
 .imgPlaceholder{
   width: 20px;
