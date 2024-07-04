@@ -41,7 +41,7 @@ const RegisterForm = () => {
               type='text'
               placeholder='Enter your username'
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => name(e.target.value)}
             />
             <input
               type='email'
