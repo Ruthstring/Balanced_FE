@@ -134,7 +134,7 @@ const Login = ({ auth, setAuth, user, setUser, setToken }) => {
   <button
     type="button"
     onClick={toggleVisibility}
-    className="absolute right-2 top-1/2 transform -translate-y-1/2" // Adjust the position to be vertically centered
+    className="btn-see absolute right-2 top-1/2 transform -translate-y-1/2" // Adjust the position to be vertically centered
   >
     {passwordVisible ? <FaEyeSlash /> : <FaEye />}
   </button>
