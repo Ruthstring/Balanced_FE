@@ -55,16 +55,16 @@ const Login = ({ user, setUser }) => {
    
    return (
       <div class ="logincontainerouter">
-      <div class="logincontainer">
+      <div class="logincontainer shadow-xl">
         <img src={LoginImage} alt="Login Visual" />
 
         {/* <div className="flex flex-col sm:py-36 py-24 sm:px-52 px-4 w-full sm:w-[50%] items-center" > */}
 
         <div className="loginform">
-        <h1 className="mb-12"> Balanced</h1>
-        <p className="text-xl mb-10">Log in</p>
+        {/* <h1 className="mb-12"> Balanced</h1> */}
+        <h1 className="text-xl mb-10">Log in</h1>
         <form 
-        className="flex flex-col items-center gap-8"
+        className="form-container flex flex-col items-center gap-8"
        onSubmit={handleSubmit}>
         
         <div className="relative">

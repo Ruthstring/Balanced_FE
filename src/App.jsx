@@ -53,8 +53,7 @@ function App() {
   return (
     <>
       <nav className='flex justify-end p-4'>
-        {!user &&
-          location.pathname !== '/' && ( // Hide logout button on login page
+      {!user && location.pathname !== '/' && location.pathname !== '/signup' && ( // Hide login/signup links on login and signup pages
             <>
               <Link to='/'>Login</Link>
               <Link to='/signup'>Signup</Link>

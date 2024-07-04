@@ -22,6 +22,8 @@ html, body {
   justify-content: center;
   align-items: center;
   margin: 50px 20px 50px 20px;
+  border-color:solid 3px blaCK;
+  max-width: 1400px;
 }
 
 
@@ -60,9 +62,9 @@ html, body {
 }
 
 .loginform p {
-  font-size: 1.5rem; /* Adjust font size for the title */
-  font-weight: bold;
-  margin-bottom: 3rem; /* Add margin below the title */
+  font-size: 16px; /* Adjust font size for the title */
+  /* font-weight: bold; */
+  /* margin-bottom: 3rem;  */
 }
 
 
@@ -214,3 +216,16 @@ overflow: none;
 /* .chart{
   width:500px;
 } */
+
+
+/*changes in login logout*/
+.form-container input{
+  background-color: #eee;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 15px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+}
