@@ -15,6 +15,7 @@ function App() {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('token')) || null;
+  const [debts, setDebts] = useState([]);
   const location = useLocation();
 
   const handleLogout = () => {
@@ -54,6 +55,26 @@ function App() {
   console.log(token);
   console.log(user);
 
+  useEffect(() => {
+    const updateDebts = async (token) => {
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/debts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            body: JSON.stringify({ household_id: user.household_id.debts }),
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+        setDebts(data);
+      } catch (error) {
+        return error.response.data.error;
+      }
+    };
+    token && updateDebts(token)
+  }, [user.balance]);
   // Redirect to login if user is not logged in and on a protected page
   if (!user && !['/', '/signup'].includes(location.pathname)) {
     return <Navigate to='/' />;
@@ -125,10 +146,6 @@ function App() {
             element={<ShoppingPage user={user} token={token} />}
           />
           <Route
-            path='/auth/balance'
-            element={<BalancePage user={user} token={token} />}
-          />
-          <Route
             path='/auth/add-household'
             element={<AddHousehold user={user} token={token} />}
           />
@@ -142,7 +159,7 @@ function App() {
           />
           <Route
             path='/auth/personal-balance'
-            element={<PersonalBalance user={user} token={token} />}
+            element={<PersonalBalance user={user} token={token} debts={debts} />}
           />
         </Route>
       </Routes>

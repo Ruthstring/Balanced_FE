@@ -1,7 +1,7 @@
 import PersonalBalance from './PersonalBalance';
 import { useState, useEffect } from 'react';
 
-const BalancePage = () => {
+const BalancePage = ({user, token}) => {
   const [balances, setBalances] = useState([]);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const BalancePage = () => {
         </ul>
       </div>
       <div className='green-box rounded-xl shadow-lg'>
-        <PersonalBalance balances={balances} />
+        <PersonalBalance balances={balances} user={user} />
       </div>
     </div>
   );

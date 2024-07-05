@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HomeShopping = (user, token) => {
   const [items, setItems] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchItems = async (token) => {
       try {
@@ -45,9 +46,9 @@ const HomeShopping = (user, token) => {
         </ul>
       </div>
       <div className='text-left mt-72 ml-5'>
-        <Link to='/auth/shoppingpage'>
-          <button className='btn-see'>See more</button>
-        </Link>
+        {/* <Link to='/auth/shoppingpage'> */}
+          <button className='btn-see' onClick={() => navigate('/auth/shoppingpage')}>See more</button>
+        {/* </Link> */}
       </div>
     </div>
   );
