@@ -45,8 +45,8 @@ const PersonalBalance = ({ user, balances, debts }) => {
       setDebtor(
         balances.find((debt) =>
           personalStatus[0].householdMember1 === user._id
-            ? debt._id === personalStatus[0].householdMember2
-            : debt._id === personalStatus[0].householdMember1
+            ? debt._id === personalStatus[0].householdMember1
+            : debt._id === personalStatus[0].householdMember2
         )
       );
     debts &&
@@ -54,8 +54,8 @@ const PersonalBalance = ({ user, balances, debts }) => {
       setCreditor(
         balances.find((debt) =>
           personalStatus[0].householdMember1 === user._id
-            ? debt._id === personalStatus[0].householdMember1
-            : debt._id === personalStatus[0].householdMember2
+            ? debt._id === personalStatus[0].householdMember2
+            : debt._id === personalStatus[0].householdMember1
         )
       );
   }, [balances]);
