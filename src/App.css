@@ -41,7 +41,7 @@ html, body {
 }
 
 .logincontainer img {
-  width: 50%;
+  width: 60%;
   height: auto;
 }
 
@@ -206,7 +206,7 @@ html, body {
 
 .balance-image{
 
-width: 45%;
+width: 50%;
 height: 100%;
 object-fit: cover;
 overflow: none;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import SignupImage from '../assets/imageforlogin.png';
+import SignupImage from '../assets/Signin_background.svg';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import the eye icons
 
@@ -81,7 +81,7 @@ const RegisterForm = () => {
             </>
           )}
         </div>
-        <img src={SignupImage} alt="Signup Visual" />
+        <img className="signup-image" src={SignupImage} alt="Signup Visual" />
       </div>
     </div>
   );

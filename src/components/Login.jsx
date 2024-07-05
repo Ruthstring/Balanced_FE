@@ -1,7 +1,7 @@
 import {useState } from "react"
 import { useNavigate, Navigate, Link} from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import LoginImage from '../assets/imageforlogin.png';
+import LoginImage from '../assets/login_background.svg';
 
 const Login = ({ auth, setAuth, user, setUser, setToken }) => {
   const [formValues, setFormValues] = useState({
@@ -134,7 +134,7 @@ const Login = ({ auth, setAuth, user, setUser, setToken }) => {
   <button
     type="button"
     onClick={toggleVisibility}
-    className="btn-see absolute right-2 top-1/2 transform -translate-y-1/2" // Adjust the position to be vertically centered
+    className=" absolute right-2 top-1/2 transform -translate-y-1/2" // Adjust the position to be vertically centered
   >
     {passwordVisible ? <FaEyeSlash /> : <FaEye />}
   </button>

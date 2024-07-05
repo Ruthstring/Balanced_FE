@@ -6,7 +6,8 @@ import emptyListImage from "../assets/empty-list.png"
 const HomeShopping = (user, token) => {
   const [items, setItems] = useState([]);
   
-  
+  console.log(token)
+  console.log(user)
   useEffect(() => {
     const fetchItems = async (token) => {
       try {
@@ -16,7 +17,7 @@ const HomeShopping = (user, token) => {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );

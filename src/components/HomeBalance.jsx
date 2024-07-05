@@ -12,6 +12,9 @@ const HomeBalance = ({ user }) => {
       ? '../src/assets/PositiveBalance.svg'
       : '../src/assets/NegativeBalance.svg';
   return (
+
+   
+
     <>
     
       <div className="container balance-container">
@@ -25,7 +28,7 @@ const HomeBalance = ({ user }) => {
             </Link>
          </div>
         
-          <img  className="balance-image ml-24" src={balanceImage} alt="Balance status"></img>
+          <img  className="balance-image hidden lg:block ml-16" src={balanceImage} alt="Balance status"></img>
       
         </div>
        
