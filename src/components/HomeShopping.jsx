@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const HomeShopping = (user, token) => {
+const HomeShopping = ({user, token}) => {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {

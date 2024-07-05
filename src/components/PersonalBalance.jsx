@@ -1,71 +1,80 @@
 import { useState, useEffect } from 'react';
 
-const PersonalBalance = ({ user, balances }) => {
+const PersonalBalance = ({ user, balances, debts }) => {
+  debts && console.log(debts);
   const [personalStatus, setPersonalStatus] = useState([]);
-  const [userName, setUserName] = useState(null);
-  const [creditors, setCreditors] = useState([]);
-  const [debts, setDebts] = useState(null);
+  const [debtsToPay, setDebtsToPay] = useState([]);
+  const [debtsToReceive, setDebtsToReceive] = useState([]);
+  const [debtor, setDebtor] = useState(null);
+  const [creditor, setCreditor] = useState(null);
 
   useEffect(() => {
-    setUserName(localStorage.getItem('username'));
-    user && setDebts(user.household_id.debts);
-  }, []);
-  console.log(debts);
-  console.log(user);
+    setPersonalStatus(
+      debts.filter(
+        (debt) =>
+          debt.householdMember1 === user._id ||
+          debt.householdMember2 === user._id
+      )
+    );
+  }, [debts]);
+
   useEffect(() => {
-    const calculatePersonalStatus = async (balances, user) => {
-      const owedInfo = [];
-      const debtsInfo = [];
-      const usersOwing = balances.filter((user) => user.balance < 0);
-      const debtors = balances.filter((user) => user.balance < 0);
-      const usersOwed = balances.filter((user) => user.balance > 0);
-      const creditors = balances.filter((user) => user.balance > 0);
+    setDebtsToPay(
+      personalStatus.filter((debt) => {
+        if (user._id === debt.householdMember1) {
+          return debt.moneyToPay > 0;
+        } else if (user._id === debt.householdMember2) {
+          return debt.moneyToReceive > 0;
+        }
+      })
+    );
+    setDebtsToReceive(
+      personalStatus.filter((debt) => {
+        if (user._id === debt.householdMember1) {
+          return debt.moneyToReceive > 0;
+        } else if (user._id === debt.householdMember2) {
+          return debt.moneyToPay > 0;
+        }
+      })
+    );
+  }, [personalStatus]);
 
-      user && debtors.forEach((debtor) => {
-        creditors.forEach((creditor) => {
-          if (debtor.balance < 0 && creditor.balance > 0) {
-            const debt = {
-             debtor: {
-                username: creditor.username,
-                _id: creditor._id,
-              },
-              moneyToPay: Math.min(-debtor.balance, creditor.balance),
-              user: {
-                username: debtor.username,
-                _id: debtor._id,
-              },
-            };
+  useEffect(() => {
+    debts &&
+      balances.length > 0 &&
+      setDebtor(
+        balances.find((debt) =>
+          personalStatus[0].householdMember1 === user._id
+            ? debt._id === personalStatus[0].householdMember2
+            : debt._id === personalStatus[0].householdMember1
+        )
+      );
+    debts &&
+      balances.length > 0 &&
+      setCreditor(
+        balances.find((debt) =>
+          personalStatus[0].householdMember1 === user._id
+            ? debt._id === personalStatus[0].householdMember1
+            : debt._id === personalStatus[0].householdMember2
+        )
+      );
+  }, [balances]);
 
-            creditor.balance -= debt.moneyOwed;
-            debtor.balance += debt.moneyOwed;
+  // console.log(debtor);
+  console.log(debtsToPay);
+  console.log(debtsToReceive);
+  console.log(creditor);
+  console.log(debtor);
 
-            owedInfo.push(debt);
-          }
-        });
-      });
-      console.log(debtsInfo);
-      // try {
-      //   const response = await fetch(
-      //     `http://localhost:5000/api/auth/household/${user.household_id._id}`,
-      //     {
-      //       method: 'PUT',
-      //       headers: {
-      //         'Content-Type': 'application/json',
-      //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-      //       },
-      //       // body: JSON.stringify({ debts: owedInfo }),
-      //     }
-      //   );
-      //   // const data = await response.json();
-      //   // console.log(data);
-      // } catch (err) {
-      //   console.log(err);
-      // }
-      setPersonalStatus(owedInfo);
-    };
-    user && calculatePersonalStatus(balances, user);
-  }, [balances, user]);
-  console.log(personalStatus);
+  const markAsPaid = (debt, debtToPay, debtToRecieve, user) => {
+    if (debtToPay) {
+      debt.payed = `${user.username} has payed you ${debt.moneyToPay}`;
+      console.log(debt);
+    } else if (debtToRecieve) {
+      debt.payedConfirmation = `${user.username} confirmed that you have payed ${debt.moneyToPay}`;
+      console.log(debt);
+    }
+  };
 
   return (
     <div className='personal-balance-section mt-10 mb-10 rounded-xl'>
@@ -75,36 +84,41 @@ const PersonalBalance = ({ user, balances }) => {
       <div>
         <h3>You Owe</h3>
         <ul>
-          {personalStatus
-            .filter((owed) => owed.user.username == userName)
-            .map((debt, index) => (
+          {debtsToPay.length > 0 ? (
+            debtsToPay.map((debt, index) => (
               <li key={index}>
-                You owe {debt.userOwed.username}: ${debt.moneyOwed.toFixed(2)}
-                {/* {console.log(credit.debtor_id)} */}
+                You owe {creditor && creditor.username}: $
+                {debt.moneyToPay.toFixed(2)}
+                <button
+                // onClick={() => settleDebt(debt)}
+                >
+                  Mark as Paid
+                </button>
+              </li>
+            ))
+          ) : (
+            <li>You don't owe anyone money</li>
+          )}
+        </ul>
+      </div>
+      <div>
+        <h3>Owed To You</h3>
+        <ul>
+          {debtsToReceive.length > 0 ? (
+            debtsToReceive.map((debt, index) => (
+              <li key={index}>
+                {debtor && debtor.username} owes you : $
+                {debt.moneyToPay.toFixed(2)}
                 <button
                 // onClick={() => settleDebt(debt.user._id, debt.moneyOwed)}
                 >
                   Mark as Paid
                 </button>
               </li>
-            ))}
-        </ul>
-      </div>
-      <div>
-        <h3>Owed To You</h3>
-        <ul>
-          {personalStatus
-            .filter((owed) => owed.userOwed.username == userName)
-            .map((credit, index) => (
-              <li key={index}>
-                {credit.user.username} owes you: ${credit.moneyOwed.toFixed(2)}
-                <button
-                // onClick={() => settleDebt(credit.user._id, credit.moneyOwed)}
-                >
-                  Settle
-                </button>
-              </li>
-            ))}
+            ))
+          ) : (
+            <li>No one owes you money</li>
+          )}
         </ul>
       </div>
     </div>
