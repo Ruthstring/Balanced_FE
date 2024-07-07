@@ -2,7 +2,7 @@ import PersonalBalance from './PersonalBalance';
 import React, { useState, useEffect } from 'react';
 import Chart from './Chart';
 
-const BalancePage = () => {
+const BalancePage = ({ user, token, debts }) => {
   const [balances, setBalances] = useState([]);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const BalancePage = () => {
       </div>
       <h1 className="text-left text-xl font-bold text-white ml-16">Personal Balance</h1>
       <div className="green-box ml-14 mr-14 rounded-xl shadow-lg">
-        <PersonalBalance balances={balances} />
+        <PersonalBalance balances={balances} user={user} debts={debts} />
       </div>
     </div>
     

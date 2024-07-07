@@ -11,7 +11,8 @@ const Home = ({ user, token }) => {
   const [profile, setProfile] = useState(null);
   const [message, setMessage] = useState('');
   const [userBalance, setUserBalance] = useState(null);
-
+  console.log(user);
+  console.log(token);
   useEffect(() => {
     const fetchProfile = async (token) => {
       try {
@@ -37,7 +38,7 @@ const Home = ({ user, token }) => {
         setMessage('Error fetching profile.');
       }
     };
-    
+
     const fetchBalances = async (token) => {
       try {
         const response = await fetch(
@@ -87,10 +88,7 @@ const Home = ({ user, token }) => {
     <div className='grid-container mt-5 ml-10 mr-10 p-5 grid grid-cols-1 md:grid-cols-2 gap-4 grid-rows-3 gap-8'>
       <div className='firstCol row-span-3 md:row-span-3 h-full'>
         <div className='container purple-box mb-5 rounded-xl overflow-hidden shadow-lg row-span-1 flex-grow grid grid-cols-1 md:grid-cols-2'>
-          <HomeProfile
-            user={user}
-            token={token}
-          />
+          <HomeProfile user={user} token={token} />
         </div>
 
         <div className='container homeBalance green-box mb-5 rounded-xl overflow-hidden shadow-lg flex-grow row-span-1 md:row-span-1'>

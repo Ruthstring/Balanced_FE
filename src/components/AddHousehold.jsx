@@ -16,7 +16,7 @@ const AddHousehold = () => {
       if (response.ok) {
         const data = await response.json();
         // Update user profile or redirect to home after successful creation
-        navigate('/home');
+        navigate('/auth/home');
       } else {
         // Handle error
       }
