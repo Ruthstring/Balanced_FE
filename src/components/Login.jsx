@@ -101,8 +101,8 @@ const Login = ({ auth, setAuth, user, setUser, setToken }) => {
    
    
    return (
-      <div class ="logincontainerouter">
-      <div class="logincontainer shadow-xl">
+      <div className ="logincontainerouter">
+      <div className="logincontainer shadow-xl">
         <img src={LoginImage} alt="Login Visual" />
 
         {/* <div className="flex flex-col sm:py-36 py-24 sm:px-52 px-4 w-full sm:w-[50%] items-center" > */}
