@@ -1,18 +1,20 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ProfilePictureUpload from '../components/ProfilePictureUpload';
 
-const HomeProfile = ({ token, user }) => {
+const HomeProfile = ({ user, token, household, setHousehold }) => {
   const navigate = useNavigate();
-  //for household search and addition
   const [message, setMessage] = useState('');
   const [options, setOptions] = useState([]);
   const [householdName, setHouseholdName] = useState('');
-  // Checking if user belongs to a household:
+  const [profilePicture, setProfilePicture] = useState('');
+
   useEffect(() => {
     const fetchHouseholdProfile = async (token) => {
       try {
-        const response = await axios.get(
+        // Fetch household information
+        const householdResponse = await axios.get(
           'http://localhost:5000/api/auth/profile',
           {
             headers: {
@@ -20,13 +22,14 @@ const HomeProfile = ({ token, user }) => {
             },
           }
         );
-
-        if (response.data.household) {
-          setMessage(` ${response.data.household.name}`);
-        } else {
+        const data = await householdResponse.data.household;
+        console.log(data);
+        // if(data) setHousehold(data);
+        if (!data){
           setMessage('No house added yet');
           setOptions(['Search for a house', 'Create a house']);
         }
+        // Fetch profile picture
       } catch (error) {
         console.error('Error fetching profile:', error);
         if (error.response && error.response.status === 401) {
@@ -42,9 +45,8 @@ const HomeProfile = ({ token, user }) => {
 
   const handleCreateHousehold = async (token) => {
     try {
-      // const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/households/create',
+        'http://localhost:5000/api/auth/households/create',
         { name: householdName },
         {
           headers: {
@@ -52,8 +54,9 @@ const HomeProfile = ({ token, user }) => {
           },
         }
       );
-      setMessage(` ${response.data.household.name}`);
-      setOptions([]); // User is now in a household
+      const data = await response.data.household;
+      setHousehold(data);
+      setOptions([]);
     } catch (error) {
       console.error(error);
     }
@@ -61,9 +64,8 @@ const HomeProfile = ({ token, user }) => {
 
   const handleJoinHousehold = async (token) => {
     try {
-      // const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/households/join',
+        'http://localhost:5000/api/auth/households/join',
         { name: householdName },
         {
           headers: {
@@ -71,9 +73,9 @@ const HomeProfile = ({ token, user }) => {
           },
         }
       );
-      // setMessage(`Household: ${response.data.household.name}`);
-      setMessage(` ${response.data.household.name}`);
-      setOptions([]); // User is now in a household
+      const data = await response.data.household;
+      setHousehold(data);
+      setOptions([]);
     } catch (error) {
       console.error(error);
     }
@@ -81,11 +83,27 @@ const HomeProfile = ({ token, user }) => {
 
   return (
     <>
-      {/* <div className="welcome-container grid-cols-2 gap-4 "> */}
-      <div className='imgPlaceholder ml-10 col-span-1 size-28'></div>
-      <div className='col-span-1 '>
-        <h1>Welcome back</h1> <div className='black-div'> {user.username} </div>
-        <div className='black-div'>{message}</div>
+      <div className='imgPlaceholder imgml-10 col-span-1 size-40'>
+        <img
+          src={profilePicture}
+          alt='Profile'
+          onClick={() =>
+            document.getElementById('profile-picture-upload').click()
+          }
+          style={{ cursor: 'pointer' }}
+          className='profile-image'
+        />
+        <ProfilePictureUpload user={user} profilePicture={profilePicture} setProfilePicture={setProfilePicture} />
+      </div>
+      <div className='col-span-1'>
+        <h1 className='text-xl'>Welcome back</h1>
+        <div className='black-div mt-6'>
+          {' '}
+          <h1 className='text-xl'>{user.username} </h1>
+        </div>
+        <div className='black-div mt-8'>
+          <h1 className='text-xl'>{household.name ? household.name : message}</h1>
+        </div>
       </div>
       {options.length > 0 && (
         <div className='options-container'>
@@ -105,9 +123,7 @@ const HomeProfile = ({ token, user }) => {
             )}
             {options.includes('Create a house') && (
               <li>
-                <button onClick={() => handleCreateHousehold(token)}>
-                  Create a house
-                </button>
+                <button onClick={() => handleCreateHousehold(token)}>Create a house</button>
               </li>
             )}
           </ul>

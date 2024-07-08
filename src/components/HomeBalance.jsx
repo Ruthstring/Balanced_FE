@@ -1,4 +1,3 @@
-import BalancePage from './ShoppingPage';
 import { Link } from 'react-router-dom';
 
 const HomeBalance = ({ user }) => {

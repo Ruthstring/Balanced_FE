@@ -12,13 +12,16 @@ import RequireLogin from './components/RequireLogin';
 
 function App() {
   const [auth, setAuth] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem('token')) || null;
   const [user, setUser] = useState(false);
   const [household, setHousehold] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token')) || null;
   const [debts, setDebts] = useState([]);
-  const [userBalance, setUserBalance] = useState(null);
-  const location = useLocation();
+  const [balances, setBalances] = useState([]);
+  const [items, setItems] = useState([]);
+  const [boughtItems, setBoughtItems] = useState([]);
 
+  const location = useLocation();
+  console.log(balances);
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
@@ -26,13 +29,10 @@ function App() {
     setToken(null);
     setAuth(false);
   };
+
   useEffect(() => {
     setToken(localStorage.getItem('token'));
   }, [auth]);
-
-  useEffect(() => {
-    setHousehold(user.household_id);
-  }, [user]);
 
   //checking user token
   useEffect(() => {
@@ -55,17 +55,18 @@ function App() {
       }
     };
     token && checkValidToken(token);
-  }, [token]);
+  }, [token, balances, items, boughtItems]);
 
   useEffect(() => {
-    setUserBalance(user.balance);
+    setHousehold(user.household_id);
   }, [user]);
+
   useEffect(() => {
     const updateDebts = async (token, user) => {
       try {
         console.log(user.household_id._id);
         const response = await fetch(
-          `http://localhost:5000/api/auth/household/${user.household_id._id}`,
+          `http://localhost:5000/api/auth/household/${user.household_id._id}/debts`,
           {
             method: 'PUT',
             headers: {
@@ -80,9 +81,8 @@ function App() {
         return error.response.data.error;
       }
     };
-    console.log(token);
     token && user && updateDebts(token, user);
-  }, [userBalance]);
+  }, [user]);
   // Redirect to login if user is not logged in and on a protected page
   if (!user && !['/', '/signup'].includes(location.pathname)) {
     return <Navigate to='/' />;
@@ -147,12 +147,33 @@ function App() {
           <Route
             path={'/auth/home'}
             element={
-              user ? <Home user={user} token={token} /> : <Navigate to='/' />
+              user ? (
+                <Home
+                  user={user}
+                  token={token}
+                  setHousehold={setHousehold}
+                  household={household}
+                  setUser={setUser}
+                  balances={balances}
+                  setBalances={setBalances}
+                />
+              ) : (
+                <Navigate to='/' />
+              )
             }
           />
           <Route
             path='/auth/shoppingpage'
-            element={<ShoppingPage user={user} token={token} />}
+            element={
+              <ShoppingPage
+                user={user}
+                token={token}
+                items={items}
+                setItems={setItems}
+                boughtItems={boughtItems}
+                setBoughtItems={setBoughtItems}
+              />
+            }
           />
           <Route
             path='/auth/add-household'
@@ -164,7 +185,19 @@ function App() {
           />
           <Route
             path='/auth/balancepage'
-            element={<BalancePage user={user} token={token} debts={debts} />}
+            element={
+              <BalancePage
+                user={user}
+                setUser={setUser}
+                token={token}
+                debts={debts}
+                setDebts={setDebts}
+                balances={balances}
+                setBalances={setBalances}
+                items={items}
+                boughtItems={boughtItems}
+              />
+            }
           />
         </Route>
       </Routes>

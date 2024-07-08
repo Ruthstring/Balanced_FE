@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 
-const ShoppingPage = ({ user, token }) => {
+const ShoppingPage = ({
+  user,
+  token,
+  items,
+  setItems,
+  boughtItems,
+  setBoughtItems,
+}) => {
   const [itemName, setItemName] = useState('');
-  const [items, setItems] = useState([]);
-  const [boughtItems, setBoughtItems] = useState([]);
   const [cost, setCost] = useState('');
   const [itemIdToBuy, setItemIdToBuy] = useState(null); // To track the item being bought
   const [error, setError] = useState(null);
@@ -13,7 +18,7 @@ const ShoppingPage = ({ user, token }) => {
     token && fetchItems(token);
     token && fetchBoughtItems(token);
   }, [token]);
- console.log(token);
+  console.log(token);
   const fetchItems = async (token) => {
     try {
       const response = await fetch(
@@ -190,18 +195,19 @@ const ShoppingPage = ({ user, token }) => {
             </button>
           </div>
           <ul className='text-left ml-8'>
-            {items.length > 0 && items.map((item) => (
-              // <div className="itemBox">
-              <li key={item._id} className='mb-2'>
-                {item.name}
-                <button
-                  onClick={() => setItemIdToBuy(item._id, token)}
-                  className='btn-buy ml-4'
-                >
-                  Buy
-                </button>
-              </li>
-            ))}
+            {items.length > 0 &&
+              items.map((item) => (
+                // <div className="itemBox">
+                <li key={item._id} className='mb-2'>
+                  {item.name}
+                  <button
+                    onClick={() => setItemIdToBuy(item._id, token)}
+                    className='btn-buy ml-4'
+                  >
+                    Buy
+                  </button>
+                </li>
+              ))}
             {itemIdToBuy && (
               <div className='cost-inputmt-4'>
                 <input

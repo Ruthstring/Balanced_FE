@@ -1,34 +1,44 @@
 import PersonalBalance from './PersonalBalance';
 import { useState, useEffect } from 'react';
 
-const BalancePage = ({ user, token, debts }) => {
-  const [balances, setBalances] = useState([]);
-
+const BalancePage = ({
+  user,
+  setUser,
+  token,
+  debts,
+  setDebts,
+  balances,
+  setBalances,
+  items,
+  boughtItems,
+}) => {
   useEffect(() => {
-    console.log('Stored username:', localStorage.getItem('username'));
-    fetchBalances();
-  }, []);
-
-  const fetchBalances = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/auth/balances', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Fetched balances:', data);
-        setBalances(data);
-      } else {
-        console.error('Failed to fetch balances');
+    const fetchBalances = async (token) => {
+      try {
+        const response = await fetch(
+          'http://localhost:5000/api/auth/balances',
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Fetched balances:', data);
+          setBalances(data);
+        } else {
+          console.error('Failed to fetch balances');
+        }
+      } catch (error) {
+        console.error('Error fetching balances:', error);
       }
-    } catch (error) {
-      console.error('Error fetching balances:', error);
-    }
-  };
+    };
+
+    token && fetchBalances(token);
+  }, [items, boughtItems]);
 
   return (
     <div className='balances-page'>
@@ -45,7 +55,7 @@ const BalancePage = ({ user, token, debts }) => {
         </ul>
       </div>
       <div className='green-box rounded-xl shadow-lg'>
-        <PersonalBalance balances={balances} user={user} debts={debts} />
+        <PersonalBalance token={token} balances={balances} user={user} debts={debts} setDebts={setDebts} />
       </div>
     </div>
   );
