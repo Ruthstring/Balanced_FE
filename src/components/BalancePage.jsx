@@ -5,6 +5,8 @@ import Chart from './Chart';
 const BalancePage = ({
   user,
   setUser,
+  household,
+  setHousehold,
   token,
   debts,
   setDebts,
@@ -40,8 +42,8 @@ const BalancePage = ({
       }
     };
 
-    token && fetchBalances(token);
-  }, [items, boughtItems]);
+    token && household && fetchBalances(token);
+  }, [token, user, items, boughtItems]);
 
   return (
     <div className='balances-page'>
@@ -81,6 +83,8 @@ const BalancePage = ({
           balances={balances}
           user={user}
           setUser={setUser}
+          household={household}
+          setHousehold={setHousehold}
           debts={debts}
           setDebts={setDebts}
           notifications={notifications}

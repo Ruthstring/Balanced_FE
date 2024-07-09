@@ -4,7 +4,6 @@ import emptyListImage from '../assets/empty-list.png';
 
 const HomeShopping = ({ user, token }) => {
   const [items, setItems] = useState([]);
-  const navigate = useNavigate();
   useEffect(() => {
     const fetchItems = async (token) => {
       try {
@@ -29,7 +28,7 @@ const HomeShopping = ({ user, token }) => {
       }
     };
 
-    token && fetchItems(token);
+    token && user?.household_id && fetchItems(token);
   }, [token]);
 
   return (

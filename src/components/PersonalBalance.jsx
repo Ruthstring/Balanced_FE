@@ -1,10 +1,10 @@
-import { data } from 'autoprefixer';
 import { useState, useEffect } from 'react';
 
 const PersonalBalance = ({
   token,
   user,
-  setUser,
+  household, 
+  setHousehold,
   balances,
   debts,
   setDebts,
@@ -97,7 +97,6 @@ const PersonalBalance = ({
 
   const updateDebts = async (token, user, newDebts, debt) => {
     try {
-      console.log(newDebts);
       const response = await fetch(
         `http://localhost:5000/api/auth/household/${user.household_id._id}/one-debt`,
         {
@@ -109,9 +108,9 @@ const PersonalBalance = ({
           body: JSON.stringify({ newDebts: newDebts, debt: debt }),
         }
       );
-      const data = await response.json();
-      console.log(data);
-      setUser(data);
+
+      const data = response.json();
+      setHousehold(data);
       if (response.ok) {
         console.log('Debts updated');
       } else {
@@ -121,10 +120,8 @@ const PersonalBalance = ({
       console.error('Error updating debts:', error);
     }
   };
-  const deleteDebt = async (debt) => {
-    
-  }
-
+  const deleteDebt = async (debt) => {};
+  console.log(debtsToPay);
   return (
     <div className='personal-balance-section mt-10 mb-10 rounded-xl  grid grid-cols-2 '>
       <h2 className='text-left text-xl font-bold ml-10 mt-10'>
@@ -137,10 +134,16 @@ const PersonalBalance = ({
             debtsToPay.map((debt, index) => (
               <li key={index}>
                 {!debt.payed
-                  ? `You owe ${
-                      creditor && creditor.username
-                    } : $ ${debt.moneyToPay.toFixed(2)}`
-                  : `Your payment of ${debt.moneyToPay.toFixed(2)} to ${
+                  ? `You owe ${creditor && creditor.username} : $ ${
+                      debt.moneyToPay === 0
+                        ? debt.moneyToReceive.toFixed(2)
+                        : debt.moneyToReceive.toFixed(2)
+                    }`
+                  : `Your payment of ${
+                      debt.moneyToPay === 0
+                        ? debt.moneyToReceive.toFixed(2)
+                        : debt.moneyToReceive.toFixed(2)
+                    } to ${
                       creditor && creditor.username
                     } is still pending confirmation!`}
                 {!debt.payed && !debt.confirmPayed && (
@@ -165,17 +168,16 @@ const PersonalBalance = ({
             debtsToReceive.map((debt, index) => (
               <li key={index}>
                 {debtor && !debt.payedConfirmation
-                  ? `${debtor.username} owes you : $ ${debt.moneyToPay.toFixed(
-                      2
-                    )}`
+                  ? `${debtor.username} owes you : $ ${
+                      debt.moneyToPay === 0
+                        ? debt.moneyToReceive.toFixed(2)
+                        : debt.moneyToReceive.toFixed(2)
+                    }`
                   : `This debt has been settled!`}
                 {debt.payed && !debt.payedConfirmation && (
                   <button onClick={() => markAsPaid(debt, false, true, user)}>
                     Settle Debt
                   </button>
-                )}
-                {debt.payedConfirmation && (
-                  <button onClick={() => deleteDebt(debt)}></button>
                 )}
               </li>
             ))

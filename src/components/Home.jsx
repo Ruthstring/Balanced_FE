@@ -1,24 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import UserProfile from './UserProfile';
+import Household from './Household';
 import HomeBalance from './HomeBalance';
 import HomeProfile from './HomeProfile';
 import HomeShopping from './HomeShopping';
-import Notifications from './Notifications';
 
-const Home = ({
-  user,
-  setUser,
-  token,
-  household,
-  setHousehold,
-  balances,
-  setBalances,
-}) => {
-  const navigate = useNavigate();
+const Home = ({ user, setUser, token, household, setHousehold }) => {
   const [profile, setProfile] = useState(null);
   const [message, setMessage] = useState('');
-  console.log(user);
-  console.log(token);
   useEffect(() => {
     const fetchProfile = async (token) => {
       try {
@@ -29,18 +18,11 @@ const Home = ({
             Authorization: `Bearer ${token}`,
           },
         });
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
+
         const data = await response.json();
-        setProfile(data);
-        if (!data.household) {
-          setMessage(
-            'You are not assigned to a household. Please create or join a household.'
-          );
-        }
+        console.log('Fetched profile:', data);
+        data?.message ? setMessage(data.message) : setProfile(data);
       } catch (error) {
-        console.error('Error fetching profile:', error);
         setMessage('Error fetching profile.');
       }
     };
@@ -69,38 +51,35 @@ const Home = ({
     };
 
     token && fetchProfile(token);
-    token && fetchBalances(token);
+    token && user?.household_id && fetchBalances(token);
   }, []);
-
-  const handleAddHousehold = () => {
-    navigate('/add-household');
-  };
-
-  const handleSearchHousehold = () => {
-    navigate('/search-household');
-  };
-
-  if (message) {
-    return (
-      <div className='flex flex-col items-center'>
-        <p>{message}</p>
-        <button onClick={handleAddHousehold}>Create Household</button>
-        <button onClick={handleSearchHousehold}>Join Household</button>
-      </div>
-    );
-  }
 
   return (
     <div className='grid-container mt-5 ml-10 mr-10 p-5 grid grid-cols-1 md:grid-cols-2 gap-4 grid-rows-3 gap-8'>
       <div className='firstCol row-span-3 md:row-span-3 h-full'>
         <div className='container purple-box mb-5 rounded-xl overflow-hidden shadow-lg row-span-1 flex-grow grid grid-cols-1 md:grid-cols-2'>
-          <HomeProfile
-            user={user}
-            token={token}
-            setHousehold={setHousehold}
-            household={household}
-            setUser={setUser}
-          />
+          <div className='imgPlaceholder imgml-10 col-span-1 size-40'>
+            <UserProfile />
+          </div>
+          <div className='col-span-1'>
+            <h1 className='text-xl'>Welcome back</h1>
+            <div className='black-div mt-6'>
+              {' '}
+              <h1 className='text-xl'>{user.username} </h1>
+            </div>
+
+            {message ? (
+              <Household message={message} />
+            ) : (
+              <HomeProfile
+                user={user}
+                token={token}
+                setHousehold={setHousehold}
+                household={household}
+                setUser={setUser}
+              />
+            )}
+          </div>
         </div>
 
         <div className='container homeBalance green-box mb-5 rounded-xl overflow-hidden shadow-lg flex-grow row-span-1 md:row-span-1'>

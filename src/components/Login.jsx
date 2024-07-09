@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Navigate, Link } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import LoginImage from '../assets/login_background.svg';
 
@@ -16,8 +16,6 @@ const Login = ({ auth, setAuth, user, setUser, setToken }) => {
   };
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   const handleInput = (e) => {
     setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -41,7 +39,6 @@ const Login = ({ auth, setAuth, user, setUser, setToken }) => {
       setAuth(true);
       setUser(data.currentUser);
       setToken(data.token);
-      // navigate('/auth/home');
     } catch (error) {
       setError(error.message);
     } finally {

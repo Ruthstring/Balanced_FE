@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 const ShoppingPage = ({
   user,
+  household,
   token,
   items,
   setItems,
@@ -14,11 +15,10 @@ const ShoppingPage = ({
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    token && fetchItems(token);
-    token && fetchBoughtItems(token);
+    token && household && fetchItems(token);
+    token && household && fetchBoughtItems(token);
   }, [token]);
-  
-  
+
   const fetchItems = async (token) => {
     try {
       const response = await fetch(
@@ -119,7 +119,6 @@ const ShoppingPage = ({
         // After buying the item, delete it from the shopping list
         await handleDeleteItem(itemIdToBuy);
 
-        //new line
         // Remove the item from the shopping list
         setItems(items.filter((item) => item._id !== itemIdToBuy));
 

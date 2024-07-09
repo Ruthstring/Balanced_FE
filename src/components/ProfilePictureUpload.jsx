@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
@@ -35,7 +35,7 @@ const ProfilePictureUpload = ({ setProfilePicture }) => {
         type="file"
         name='profilePicture'
         onChange={handleFileChange}
-        style={{ display: 'none' }} // Hide the file input element
+        style={{ display: 'none' }} 
       />
     </div>
   );

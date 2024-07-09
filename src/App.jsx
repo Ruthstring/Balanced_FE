@@ -13,7 +13,7 @@ import RequireLogin from './components/RequireLogin';
 function App() {
   const [auth, setAuth] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('token')) || null;
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
   const [household, setHousehold] = useState(null);
   const [debts, setDebts] = useState([]);
   const [balances, setBalances] = useState([]);
@@ -22,7 +22,6 @@ function App() {
   const [notifications, setNotifications] = useState([]);
 
   const location = useLocation();
-  console.log(balances);
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
@@ -30,10 +29,9 @@ function App() {
     setToken(null);
     setAuth(false);
   };
-
   useEffect(() => {
     setToken(localStorage.getItem('token'));
-  }, [auth]);
+  }, []);
 
   //checking user token
   useEffect(() => {
@@ -56,18 +54,20 @@ function App() {
       }
     };
     token && checkValidToken(token);
-  }, [token, balances, items, boughtItems]);
+  }, [token, household, boughtItems]);
 
   useEffect(() => {
-    setHousehold(user.household_id);
-  }, [user]);
+    setHousehold(user?.household_id);
+  }, [auth]);
 
+  // console.log('user', user);
+  // console.log('household', household);
   useEffect(() => {
-    const updateDebts = async (token, user) => {
+    const updateDebts = async (token, household) => {
       try {
-        console.log(user.household_id._id);
+        console.log(household._id);
         const response = await fetch(
-          `http://localhost:5000/api/auth/household/${user.household_id._id}/debts`,
+          `http://localhost:5000/api/auth/household/${household._id}/debts`,
           {
             method: 'PUT',
             headers: {
@@ -77,13 +77,14 @@ function App() {
           }
         );
         const data = await response.json();
+        console.log(data);
         setDebts(data);
       } catch (error) {
         return error.response.data.error;
       }
     };
-    token && user && updateDebts(token, user);
-  }, [user]);
+    household && household._id && updateDebts(token, household);
+  }, [token, user, household]);
 
   // Redirect to login if user is not logged in and on a protected page
   if (!user && !['/', '/signup'].includes(location.pathname)) {
@@ -130,6 +131,8 @@ function App() {
               setAuth={setAuth}
               user={user}
               setUser={setUser}
+              token={token}
+              setToken={setToken}
             />
           }
         />
@@ -141,6 +144,8 @@ function App() {
               setAuth={setAuth}
               user={user}
               setUser={setUser}
+              token={token}
+              setToken={setToken}
             />
           }
         />
@@ -170,6 +175,7 @@ function App() {
               <ShoppingPage
                 user={user}
                 token={token}
+                household={household}
                 items={items}
                 setItems={setItems}
                 boughtItems={boughtItems}
@@ -179,11 +185,23 @@ function App() {
           />
           <Route
             path='/auth/add-household'
-            element={<AddHousehold user={user} token={token} />}
+            element={
+              <AddHousehold
+                user={user}
+                token={token}
+                setHousehold={setHousehold}
+              />
+            }
           />
           <Route
             path='/auth/search-household'
-            element={<SearchHousehold user={user} token={token} />}
+            element={
+              <SearchHousehold
+                user={user}
+                token={token}
+                setHousehold={setHousehold}
+              />
+            }
           />
           <Route
             path='/auth/balancepage'
@@ -191,6 +209,8 @@ function App() {
               <BalancePage
                 user={user}
                 setUser={setUser}
+                household={household}
+                setHousehold={setHousehold}
                 token={token}
                 debts={debts}
                 setDebts={setDebts}
