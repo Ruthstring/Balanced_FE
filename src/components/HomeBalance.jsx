@@ -12,17 +12,27 @@ const HomeBalance = ({ user }) => {
       : '../src/assets/NegativeBalance.svg';
   return (
     <>
-      {/* // <div className="rounded overflow-hidden shadow-lg"> */}
-      {/* <h1>User Balance Overview</h1> */}
-      <div className='container '>
-        {user.balance ? (
+      <div className='container balance-container'>
+        {user.balance !== null && user.balance !== undefined ? (
           <div className='flex col cols-2'>
-            <p className={`text-3xl font-bold mt-12 ${balanceColorClass}`}>
-              Balance: ${user.balance.toFixed(2)}
-            </p>
+            <div>
+              <p
+                className={`text-4xl text-left font-bold mt-6 ml-12 ${balanceColorClass}`}
+              >
+                Balance{' '}
+              </p>
+              <p
+                className={`text-5xl font-bold mt-4 mb-8 ml-12 ${balanceColorClass}`}
+              >
+                ${user.balance.toFixed(2)}
+              </p>
+              <Link to='/auth/balancepage'>
+                <button className='btn-see mb-6 mt-8'>See more</button>
+              </Link>
+            </div>
 
             <img
-              className='w-48 h-48'
+              className='balance-image hidden lg:block ml-16'
               src={balanceImage}
               alt='Balance status'
             ></img>
@@ -31,9 +41,6 @@ const HomeBalance = ({ user }) => {
           <p>Loading balance...</p>
         )}
       </div>
-      <Link to='/auth/balancepage'>
-        <button className='btn-see'>See more</button>
-      </Link>
     </>
   );
 };

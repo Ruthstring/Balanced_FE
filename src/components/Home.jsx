@@ -5,12 +5,18 @@ import HomeProfile from './HomeProfile';
 import HomeShopping from './HomeShopping';
 import Notifications from './Notifications';
 
-const Home = ({ user, setUser, token, household, setHousehold, balances, setBalances }) => {
-  // const [username, setUsername] = useState("");
+const Home = ({
+  user,
+  setUser,
+  token,
+  household,
+  setHousehold,
+  balances,
+  setBalances,
+}) => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [message, setMessage] = useState('');
-  const [userBalance, setUserBalance] = useState(null);
   console.log(user);
   console.log(token);
   useEffect(() => {

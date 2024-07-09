@@ -19,6 +19,7 @@ function App() {
   const [balances, setBalances] = useState([]);
   const [items, setItems] = useState([]);
   const [boughtItems, setBoughtItems] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
   const location = useLocation();
   console.log(balances);
@@ -83,18 +84,19 @@ function App() {
     };
     token && user && updateDebts(token, user);
   }, [user]);
+
   // Redirect to login if user is not logged in and on a protected page
   if (!user && !['/', '/signup'].includes(location.pathname)) {
     return <Navigate to='/' />;
   }
-  console.log(debts);
 
   return (
     <>
       <nav className='flex justify-end p-4'>
         {!user &&
           !auth &&
-          location.pathname !== '/' && ( // Hide logout button on login page
+          location.pathname !== '/' && // Hide logout button on login page
+          location.pathname !== '/signup' && (
             <>
               <Link to='/'>Login</Link>
               <Link to='/signup'>Signup</Link>
@@ -196,6 +198,8 @@ function App() {
                 setBalances={setBalances}
                 items={items}
                 boughtItems={boughtItems}
+                notifications={notifications}
+                setNotifications={setNotifications}
               />
             }
           />

@@ -23,13 +23,11 @@ const HomeProfile = ({ user, token, household, setHousehold }) => {
           }
         );
         const data = await householdResponse.data.household;
-        console.log(data);
-        // if(data) setHousehold(data);
-        if (!data){
+        setHousehold(data);
+        if (!data) {
           setMessage('No house added yet');
           setOptions(['Search for a house', 'Create a house']);
         }
-        // Fetch profile picture
       } catch (error) {
         console.error('Error fetching profile:', error);
         if (error.response && error.response.status === 401) {
@@ -93,8 +91,10 @@ const HomeProfile = ({ user, token, household, setHousehold }) => {
           style={{ cursor: 'pointer' }}
           className='profile-image'
         />
-        <ProfilePictureUpload user={user} profilePicture={profilePicture} setProfilePicture={setProfilePicture} />
+
+        <ProfilePictureUpload setProfilePicture={setProfilePicture} />
       </div>
+
       <div className='col-span-1'>
         <h1 className='text-xl'>Welcome back</h1>
         <div className='black-div mt-6'>
@@ -102,7 +102,7 @@ const HomeProfile = ({ user, token, household, setHousehold }) => {
           <h1 className='text-xl'>{user.username} </h1>
         </div>
         <div className='black-div mt-8'>
-          <h1 className='text-xl'>{household.name ? household.name : message}</h1>
+          <h1 className='text-xl'>{message}</h1>
         </div>
       </div>
       {options.length > 0 && (
@@ -121,9 +121,12 @@ const HomeProfile = ({ user, token, household, setHousehold }) => {
                 </button>
               </li>
             )}
+
             {options.includes('Create a house') && (
               <li>
-                <button onClick={() => handleCreateHousehold(token)}>Create a house</button>
+                <button onClick={() => handleCreateHousehold(token)}>
+                  Create a house
+                </button>
               </li>
             )}
           </ul>

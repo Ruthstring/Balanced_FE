@@ -13,12 +13,12 @@ const ShoppingPage = ({
   const [itemIdToBuy, setItemIdToBuy] = useState(null); // To track the item being bought
   const [error, setError] = useState(null);
 
-  console.log(user);
   useEffect(() => {
     token && fetchItems(token);
     token && fetchBoughtItems(token);
   }, [token]);
-  console.log(token);
+  
+  
   const fetchItems = async (token) => {
     try {
       const response = await fetch(

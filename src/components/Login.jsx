@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import LoginImage from '../assets/login_background.svg';
 
 const Login = ({ auth, setAuth, user, setUser, setToken }) => {
   const [formValues, setFormValues] = useState({
@@ -48,47 +49,64 @@ const Login = ({ auth, setAuth, user, setUser, setToken }) => {
     }
   };
   if (auth && user) return <Navigate to='/auth/home' />;
+
   return (
-    <div className='flex flex-col sm:py-36 py-24 sm:px-52 px-4 w-full sm:w-[50%] items-center'>
-      <form
-        className='flex flex-col items-center gap-8'
-        onSubmit={handleSubmit}
-      >
-        <h1>Log in</h1>
-        <label htmlFor='email'>Email</label>
-        <input
-          className='input input-bordered sm:w-96 bg-base-200'
-          placeholder='email'
-          type='text'
-          name='email'
-          id='email'
-          value={formValues.email}
-          onChange={handleInput}
-        />
-
-        <div className='relative'>
-          <label htmlFor='password'>Password</label>
-          <input
-            className='input input-bordered sm:w-96  bg-base-200'
-            type={passwordVisible ? 'text' : 'password'}
-            placeholder='Password'
-            name='password'
-            id='password'
-            value={formValues.password}
-            onChange={handleInput}
-          />
-          <button
-            type='button'
-            onClick={toggleVisibility}
-            className='absolute right-2 top-10 transform -translate-y-1/2'
+    <div className='logincontainerouter'>
+      <div className='logincontainer shadow-xl'>
+        <img src={LoginImage} alt='Login Visual' />
+        <div className='loginform'>
+          <h1 className='text-xl mb-10'>Log in</h1>
+          <form
+            className='form-container flex flex-col items-center gap-8'
+            onSubmit={handleSubmit}
           >
-            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-          </button>
-        </div>
-        <button disabled={loading}>Login</button>
+            <div className='relative'>
+              <input
+                className='input input-bordered sm:w-96 bg-base-200'
+                placeholder='Email'
+                type='text'
+                name='email'
+                id='email'
+                value={formValues.email}
+                onChange={handleInput}
+              />
+            </div>
 
-        {error && <p>{error}</p>}
-      </form>
+            <div className='relative'>
+              <label htmlFor='password'></label>
+
+              <input
+                className='input input-bordered sm:w-96 bg-base-200 pr-10' // Add pr-10 to give space for the icon
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder='Password'
+                name='password'
+                id='password'
+                value={formValues.password}
+                onChange={handleInput}
+              />
+              <button
+                type='button'
+                onClick={toggleVisibility}
+                className=' absolute right-2 top-1/2 transform -translate-y-1/2' // Adjust the position to be vertically centered
+              >
+                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+
+            <button disabled={loading} className='btn-see'>
+              Login
+            </button>
+
+            {error && <p>{error}</p>}
+          </form>
+          <p className='mt-4'>
+            New here?{' '}
+            <Link to='/signup' className='text-blue-500 underline'>
+              Sign up
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
