@@ -1,9 +1,5 @@
 # House Balance App
 
-![Logo](https://dummyimage.com/400x100/000/fff&text=House+Balance+App)
-
-## Overview
-
 The **House Balance App** is a web application designed to help people living together manage shared expenses efficiently. Users can add items to a shopping list, record purchased items, and assign the user who bought them to calculate balances among household members. The application calculates how much each member owes or is owed and displays these results in a visually appealing chart.
 
 ## Features
@@ -33,7 +29,11 @@ The **House Balance App** is a web application designed to help people living to
 
 
 ## This is how it looks: 
-![Diseño sin título (18)](https://github.com/user-attachments/assets/9ff47758-ab80-4e75-98d7-3ef7f6bab9d7)
-![Diseño sin título (19)](https://github.com/user-attachments/assets/9ee68a68-941c-433c-ae3b-ad0f8412f483)
-![Diseño sin título (21)](https://github.com/user-attachments/assets/fac385a2-1838-4dec-92e6-d4e73c49df49)
-![Diseño sin título (22)](https://github.com/user-attachments/assets/a1b29b31-cd99-47da-99ee-daac93b32a9f)
+![Sin título (940 x 600 px) (1)](https://github.com/user-attachments/assets/78ef0bbd-9d51-4132-a88a-250d2c072ef9)
+![Sin título (940 x 600 px)](https://github.com/user-attachments/assets/b0ac73c3-5e24-4558-8c6c-60a92a242ecd)
+![Sin título (940 x 600 px) (3)](https://github.com/user-attachments/assets/2980a2f5-463b-4522-9963-37d597c0efa6)
+![Sin título (940 x 600 px) (2)](https://github.com/user-attachments/assets/205070c1-5d4e-4437-bb8e-ac5b290fba33)
+![Sin título (940 x 600 px) (4)](https://github.com/user-attachments/assets/99bd7a64-e374-42b7-9a60-75767b1c5490)
+
+
+
